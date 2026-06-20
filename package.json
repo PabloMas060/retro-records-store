@@ -46,5 +46,8 @@
     "ignore": [
       "src/data/*.json"
     ]
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.5"
   }
 }
