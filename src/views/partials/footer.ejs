@@ -1,39 +1,51 @@
+<footer class="site__footer">
+    <div class="footer__container container">
+        
+        <div class="footer__card">
+            <div class="footer__icon-wrapper">
+                <img src="/iconos/icono-ficha.svg" alt="Ubicación" class="footer__icon">
+            </div>
+            <div class="footer__content">
+                <h3 class="footer__title">Ubicación</h3>
+                <p class="footer__text">Calle Ejemplo 123</p>
+                <p class="footer__text">Buenos Aires, Argentina</p>
+            </div>
+        </div>
 
-<footer>
-  <div class="footer-container">
-    <div class="footer-object">
-      <img src="/iconos/icono-ficha.svg" alt="Ubicación">
-      <div class="title-container">
-        <h3>Ubicación</h3>
-        <p>Calle ejemplo, 123</p>
-        <p>Buenos Aires, BA 12345</p>
-      </div>
+        <div class="footer__card">
+            <div class="footer__icon-wrapper">
+                <img src="/iconos/icono-reloj.svg" alt="Horario" class="footer__icon">
+            </div>
+            <div class="footer__content">
+                <h3 class="footer__title">Horario</h3>
+                <p class="footer__text">Lunes a Viernes</p>
+                <p class="footer__text">06:30 AM — 11:00 PM</p>
+            </div>
+        </div>
+
+        <a href="/contact" class="footer__card footer__card--link">
+            <div class="footer__icon-wrapper">
+                <img src="/iconos/icono-email.svg" alt="Contacto" class="footer__icon">
+            </div>
+            <div class="footer__content">
+                <h3 class="footer__title">Contacto</h3>
+                <p class="footer__text">ejemplo@gmail.com</p>
+                <p class="footer__text">+54 11 1234-5555</p>
+            </div>
+        </a>
+
+        <a href="/about" class="footer__card footer__card--link">
+            <div class="footer__icon-wrapper">
+                <img src="/iconos/icono-diamante.svg" alt="Conocenos" class="footer__icon">
+            </div>
+            <div class="footer__content">
+                <h3 class="footer__title">Conocenos</h3>
+                <p class="footer__text footer__text--action">Saber más sobre la tienda →</p>
+            </div>
+        </a>
+
     </div>
-
-    <div class="footer-object">
-      <img src="/iconos/icono-reloj.svg" alt="Horario">
-      <div class="title-container">
-        <h3>Horario</h3>
-        <p>Lunes a viernes</p>
-        <p>De 6:30 a.m a 11 p.m</p>
-      </div>
+    <div class="footer__bottom">
+        <p class="footer__copy">&copy; <%= new Date().getFullYear() %> Retro Records Store. Todos los derechos reservados.</p>
     </div>
-
-    <a href="/contact" class="footer-object">
-      <img  class="contacto" src="/iconos/icono-email.svg" alt="Contacto">
-      <div class="title-container">
-        <h3>Contacto</h3>
-        <p>correo ejemplo@gmail.com</p>
-        <p>1234.5555(55)</p>
-      </div>
-    </a>
-
-    <a href="/about" class="footer-object">
-      <img src="/iconos/icono-diamante.svg" alt="¿Quiénes somos?">
-      <div class="title-container">
-        <h3>Conocenos</h3>
-      </div>
-    </a>
-  </div>
 </footer>
-

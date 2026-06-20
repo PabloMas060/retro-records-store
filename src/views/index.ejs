@@ -1,166 +1,167 @@
 <!DOCTYPE html>
-<html>
-<%- include('partials/head',{ title : 'HOME' }) %>
+<html lang="es">
+<%- include('partials/head',{ title : 'Retro Records Store - Home' }) %>
 
-    <body class="home__body">
-        <%- include('partials/header') %>
+<body class="home__body">
+    <%- include('partials/header') %>
 
-            <div class="home__bienvenida">
-                <img src="/banner-gif01.gif" alt="">
+    <header class="home__hero">
+        <div class="hero__overlay"></div>
+        <img src="/banner-gif01.gif" alt="Retro Records Banner" class="hero__img">
+        <div class="hero__content">
+            <h1 class="hero__title">Retro Records Store</h1>
+            <p class="hero__subtitle">El templo de los clásicos en vinilo, CD y merchandising oficial.</p>
+        </div>
+    </header>
+
+    <nav class="home__shortcuts container">
+        <div class="shortcut__grid">
+            <div class="shortcut__card">
+                <a href="/fans">
+                    <img src="/presentacion/presentacion-paraFans.png" alt="Para los fans" class="shortcut__icon">
+                    <span class="shortcut__label">Para los fans</span>
+                </a>
             </div>
-
-
-            <div class="row contenedor__presentaciones">
-                <div class="col-3 mx-0 text-center first-set animate__animated animate__pulse">
-                    <a href="/fans"><img src="/presentacion/presentacion-paraFans.png" alt="" class="icon-card img-fluid"></a>
-                    <span class="icon-span">Para los fans</span>
-                </div>
-                <div class="col-3 mx-0 text-center first-set animate__animated animate__pulse">
-                    <a href="/fans"><img src="/presentacion/presentacion-radio.png" alt="" class="icon-card img-fluid"></a>
-                    <span class="icon-span">Music Player</span>
-
-                </div>
-                <div class="col-3 mx-0 text-center first-set animate__animated animate__pulse">
-                    <a href="/products/artists"><img src="/presentacion/presentacion-artistas.png" alt="" class="icon-card img-fluid"></a>
-                    <span class="icon-span">Todos los artistas</span>
-
-                </div>
+            <div class="shortcut__card">
+                <a href="/fans">
+                    <img src="/presentacion/presentacion-radio.png" alt="Music Player" class="shortcut__icon">
+                    <span class="shortcut__label">Music Player</span>
+                </a>
             </div>
+            <div class="shortcut__card">
+                <a href="/products/artists">
+                    <img src="/presentacion/presentacion-artistas.png" alt="Todos los artistas" class="shortcut__icon">
+                    <span class="shortcut__label">Todos los artistas</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
+    <main class="home__main container">
 
-<!-- 
-            <div class="row contenedor__presentaciones">
-                <div class="col-6 presentacion__caja1">
-                    <a href=""><img class="img-fluid" src="/presentacion/presentacion-capsulaTiempo.png" alt=""></a>
-                    <a href=""><img class="img-fluid" src="/presentacion/presentacion-noticias.png" alt=""></a>
-                    <a href=""><img class="img-fluid" src="/presentacion/presentacion-paraFans.png" alt=""></a>
-                    <a href=""><img class="img-fluid" src="/presentacion/presentacion-radio.png" alt=""></a>
-
-
-
-
-
-
+        <section class="music__section">
+            <div class="section__header">
+                <h2 class="section__title">Iconos del Rock</h2>
+                <p class="section__subtitle">Artistas indispensables que cambiaron la historia de la música.</p>
+            </div>
+            
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <% bands.forEach(({id, mainImage, categoryId}) => { %>
+                        <% if (categoryId === 1) { %>
+                            <div class="swiper-slide">
+                                <article class="music__card">
+                                    <a href="/products/artists/detail/<%= id %>" class="card__link">
+                                        <div class="card__img-wrapper">
+                                            <img class="card__img" src="/images/bands/<%= mainImage %>" alt="Band Image">
+                                        </div>
+                                    </a>
+                                </article>
+                            </div>
+                        <% } %>
+                    <% }) %>
                 </div>
-                <div class="col-6 presentacion__caja2">
-                    <a href=""><img class="img-fluid" src="/presentacion/presentacion-artistas.png" alt=""></a>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
 
+        <section class="music__section">
+            <div class="section__header">
+                <h2 class="section__title">Clásicos</h2>
+                <p class="section__subtitle">Bandas legendarias con más de 30 años de pura trayectoria.</p>
+            </div>
+            
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <% bands.forEach(({id, mainImage, categoryId}) => { %>
+                        <% if (categoryId === 4) { %>
+                            <div class="swiper-slide">
+                                <article class="music__card">
+                                    <a href="/products/artists/detail/<%= id %>" class="card__link">
+                                        <div class="card__img-wrapper">
+                                            <img class="card__img" src="/images/bands/<%= mainImage %>" alt="Band Image">
+                                        </div>
+                                    </a>
+                                </article>
+                            </div>
+                        <% } %>
+                    <% }) %>
                 </div>
-            </div> -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
 
-            <section class="col-12 col-md-4 section__black-index">
-                <h2 class="mt-3">Iconos del rock</h2>
-                <p>Encuentra a los artistas que marcaron la historia</p>
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-
-                        <% bands.forEach(({id,mainImage,categoryId})=> { %>
-                            <% if (categoryId===1) { %>
-                                <div class="swiper-slide">
-                                    <div class="card-index-black">
-                                        <a href="/products/artists/detail/<%= id %>"><img class="img-fluid"
-                                                src="/images/bands/<%= mainImage %>" alt="1"></a>
-                                    </div>
-                                </div>
-                                <% } %>
-
-                                    <% }) %>
-
-                    </div>
-                    <div class="swiper-pagination"></div>
+        <section class="music__section">
+            <div class="section__header">
+                <h2 class="section__title">Orgullo Nacional 🇦🇷</h2>
+                <p class="section__subtitle">Celebramos el increíble y eterno legado musical de nuestro país.</p>
+            </div>
+            
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <% bands.forEach(({id, mainImage, categoryId}) => { %>
+                        <% if (categoryId === 2) { %>
+                            <div class="swiper-slide">
+                                <article class="music__card">
+                                    <a href="/products/artists/detail/<%= id %>" class="card__link">
+                                        <div class="card__img-wrapper">
+                                            <img class="card__img" src="/images/bands/<%= mainImage %>" alt="Band Image">
+                                        </div>
+                                    </a>
+                                </article>
+                            </div>
+                        <% } %>
+                    <% }) %>
                 </div>
-            </section>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
 
-            <section class="section__red">
-                <h2 class="mt-5">Clásicos</h2>
-                <p>Aquí encontrarás bandas con más de 30 años de trayectoria</p>
-                <div class="swiper mySwiper my-5">
-                    <div class="swiper-wrapper">
-                        <% bands.forEach(({id,mainImage,categoryId})=> { %>
-                            <% if (categoryId===4) { %>
-                                <div class="swiper-slide">
-                                    <div class="card-index-black">
-                                        <a href="/products/artists/detail/<%= id %>"><img class="img-fluid"
-                                                src="/images/bands/<%= mainImage %>" alt="1"></a>
-                                    </div>
-                                </div>
-                                <% } %>
-
-                                    <% }) %>
-                    </div>
-                    <div class="swiper-pagination"></div>
+        <section class="music__section">
+            <div class="section__header">
+                <h2 class="section__title">Indies que apoyamos</h2>
+                <p class="section__subtitle">Proyectos emergentes listos para romper tus auriculares.</p>
+            </div>
+            
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <% bands.forEach(({id, mainImage, categoryId}) => { %>
+                        <% if (categoryId === 3) { %>
+                            <div class="swiper-slide">
+                                <article class="music__card">
+                                    <a href="/products/artists/detail/<%= id %>" class="card__link">
+                                        <div class="card__img-wrapper">
+                                            <img class="card__img" src="/images/bands/<%= mainImage %>" alt="Band Image">
+                                        </div>
+                                    </a>
+                                </article>
+                            </div>
+                        <% } %>
+                    <% }) %>
                 </div>
-            </section>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
 
-            <section class="section__white">
-                <h2 class="mb-2">Orgullo Nacional</h2>
-                <p class="mb-3">En esta sección, celebramos el increíble legado musical de Argentina</p>
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                        <% bands.forEach(({id,mainImage,categoryId})=> { %>
-                            <% if (categoryId===2) { %>
-                                <div class="swiper-slide">
-                                    <div class="card-index-black"><a href="/products/artists/detail/<%= id %>"><img
-                                                class="img-fluid" src="/images/bands/<%= mainImage %>" alt="1"></a>
-                                    </div>
-                                </div>
-                                <% } %>
+    </main>
 
-                                    <% }) %>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                </div>
+    <%- include('partials/footer') %>
 
-            </section>
-            <section class="section__yellow pt-5">
-                <h2>Indies que apoyamos</h2>
-                <p>Destacamos a artistas y grupos emergentes, listos para cautivar tus oídos</p>
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                        <% bands.forEach(({id,mainImage,categoryId})=> { %>
-                            <% if (categoryId===3) { %>
-                                <div class="swiper-slide">
-                                    <div class="card-index-black">
-                                        <a href="/products/artists/detail/<%= id %>"><img class="img-fluid"
-                                                src="/images/bands/<%= mainImage %>" alt="1"></a>
-                                    </div>
-                                </div>
-                                <% } %>
-
-                                    <% }) %>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-
-            </section>
-
-            <!-- Pie de página -->
-            <%- include('partials/footer') %>
-
-
-                <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-                <script>
-                    var swiper = new Swiper(".mySwiper", {
-                        slidesPerView: 1,
-                        spaceBetween: 3,
-                        pagination: {
-                            el: ".swiper-pagination",
-                            clickable: true,
-                        },
-                        breakpoints: {
-                            481: {
-                                slidesPerView: 2,
-                                spaceBetween: 20,
-                            },
-                            769: {
-                                slidesPerView: 3,
-                                spaceBetween: 40,
-                            }
-                        },
-                    });
-                </script>
-
-
-    </body>
-
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                480: { slidesPerView: 2, spaceBetween: 20 },
+                768: { slidesPerView: 3, spaceBetween: 24 },
+                1024: { slidesPerView: 4, spaceBetween: 24 } // Agregamos soporte para pantallas grandes de escritorio
+            },
+        });
+    </script>
+</body>
 </html>

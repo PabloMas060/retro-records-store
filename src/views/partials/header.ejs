@@ -1,202 +1,146 @@
-<header class="header">
-    <div class="header__logo">
-        <a href="/"><img class="w-50" style="padding-left: 2rem;" src="/logoCreativeSouls.png" alt="LOGO"></a>
-    </div>
+<header class="site__header">
+    <div class="header__container">
+        <div class="header__logo-wrapper">
+            <a href="/">
+                <img class="header__logo-img" src="/logoCreativeSouls.png" alt="Retro Records Logo">
+            </a>
+        </div>
 
-    <nav class="header__navbar">
-        <ul class="text-center align-items-center g-5 header__navbar__ul-1">
-
-
-            <% if (locals.userLogin) { %>
-                <li>
-                    <h6>Bienvenido</h6>
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <button id="toggle-bars" class="nav__btn" aria-label="Abrir Secciones">
+                        <img width="24" height="24" src="/iconos/icono-radio.svg" alt="Secciones">
+                        <span class="nav__text">Secciones</span>
+                    </button>
                 </li>
 
+                <li class="nav__item">
+                    <a href="/products/artists" class="nav__link">
+                        <img width="24" height="24" src="/iconos/icono-guitarraElectrica.svg" alt="Bandas">
+                        <span class="nav__text">Bandas</span>
+                    </a>
+                </li>
 
-                <!--   <li><a href="/users/foro"><img width="30" src="/iconos/icono-microfono.svg" alt=""></a>
-                <p>Foro</p></li>
-                <li><a href=""><img width="30" src="/iconos/icono-notaMusical.svg" alt=""></a>
-                <p>Algun lado</p></li> -->
-
-
-                <% if (locals.userLogin.rolId===1) { %>
-                    <li><a href="/users/admin"><img width="30" src="/iconos/icono-diamante.svg" alt=""></a>
-                        <p class="header-p">Admin</p>
-                    </li>
-
+                <% if (locals.userLogin) { %>
+                    <% if (locals.userLogin.rolId === 1) { %>
+                        <li class="nav__item nav__item--admin">
+                            <a href="/users/admin" class="nav__link">
+                                <img width="24" height="24" src="/iconos/icono-diamante.svg" alt="Admin">
+                                <span class="nav__text text--gradient">Admin</span>
+                            </a>
+                        </li>
                     <% } %>
 
-                        <li><a href="/groups"><img width="30" src="/iconos/icono-radio.svg" alt=""></a>
-                            <p class="header-p">Grupos</p>
-                        </li>
-                        <li>
-                            <a href="/api/cart"><img width="30" src="/iconos/icono-carrito.svg" alt=""></a>
-                            <p class="header-p">Carrito</p>
-                        </li>
-                        <li><a href="/users/logout"><img width="30" src="/iconos/icono-cerrar.svg" alt=""></a>
-                            <p class="header-p">Salir</p>
-                        </li>
-                        
-                        <li><a href="/users/profile"><img width="30" style="border-radius: 50%;" src="<%= /http/.test(user.avatar) ? user.avatar?.toString().trim() : `/avatar/${user.avatar || 'default-avatar.jpg'}` %>" alt=""></a>
-                        <p class="header-p">Perfil</p></li>
-                        <% }else{ %>
-                            <li>
-                                <a href="#" id="open-login-modal-link"><img width="30" src="/iconos/icono-avatarTemporal.svg"
-                                        alt=""></a>
-                                <p class="header-p">Ingresar</p>
-                            </li>
-                        <% } %>
-                            <li><a href="/products/artists"><img width="30" src="/iconos/icono-guitarraElectrica.svg"
-                                        alt=""></a>
-                                <p class="header-p">Bandas</p>
-                            </li>
+                    <li class="nav__item">
+                        <a href="/api/cart" class="nav__link">
+                            <img width="24" height="24" src="/iconos/icono-carrito.svg" alt="Carrito">
+                            <span class="nav__text">Carrito</span>
+                        </a>
+                    </li>
 
-                          
+                    <li class="nav__item nav__item--profile">
+                        <a href="/users/profile" class="nav__profile-link">
+                            <img class="nav__avatar" src="<%= /http/.test(user.avatar) ? user.avatar?.toString().trim() : `/avatar/${user.avatar || 'default-avatar.jpg'}` %>" alt="Mi Perfil">
+                            <span class="nav__text"><%= locals.userLogin.name || 'Perfil' %></span>
+                        </a>
+                    </li>
 
+                    <li class="nav__item">
+                        <a href="/users/logout" class="nav__link nav__link--logout">
+                            <img width="24" height="24" src="/iconos/icono-cerrar.svg" alt="Salir">
+                            <span class="nav__text">Salir</span>
+                        </a>
+                    </li>
 
-
-        </ul>
-
-    </nav>
+                <% } else { %>
+                    <li class="nav__item">
+                        <a href="#" id="open-login-modal-link" class="nav__link nav__link--login">
+                            <img width="24" height="24" src="/iconos/icono-avatarTemporal.svg" alt="Ingresar">
+                            <span class="nav__text">Ingresar</span>
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>
+    </div>
 </header>
-<!-- <div class="menu-right">
-    <section>
-        <h6>Nombre usuario <a id="toggle-button-close" href="#"><i class="fa-regular fa-circle-xmark"></i></a></h6>
-        <div class="opciones-sesion">
-            <a class="btn btn-dark" href="#" id="open-login-modal-link">Iniciar Sesión</a>
-            <a class="btn btn-dark" href="/users/register">Registrarme</a>
-        </div>
-        <div class="row menu-right-section">
-            <div class="col-4 menu-right-item">
-                <a href="/users/profile"><img width="45" src="/iconos/icono-avatarTemporal.svg" alt=""></a>
-                <p>Perfil</p>
-            </div>
-            <div class="col-4 menu-right-item">
-                <a href="/users/inbox"><img width="45" src="/iconos/icono-mensaje.svg" alt=""></a>
-                <p>Mensajes</p>
-            </div>
-            <div class="col-4 menu-right-item">
-                <a href="/users/config"><img width="45" src="/iconos/icono-configuracion.svg" alt=""></a>
-                <p>Ajustes</p>
-            </div>
-            <div class="col-4 menu-right-item">
-                <a href="/users/friends"><img width="45" src="/iconos/icono-amigos.svg" alt=""></a>
-                <p>Amigos</p>
-            </div>
-            <div class="col-4 menu-right-item">
-                <a href="/users/nexus"><img width="45" src="/iconos/icono-nexus.svg" alt=""></a>
-                <p>Nexus</p>
-            </div>
-            <div class="col-4 menu-right-item">
-                <a href="/api/cart"><img width="45" src="/iconos/icono-carrito.svg" alt=""></a>
-                <p>Carrito</p>
-            </div>
 
-        </div>
-    </section>
-    <section>
-        <h6>Notificaciones</h6>
-    </section>
-</div>
- -->
 <div class="menu-left">
-    <section>
-        <h6>Secciones</h6> <a id="toggle-button-close2" href="#"><i class="fa-regular fa-circle-xmark"></i></a>
-        <div class="row menu-left-section">
-            <div class="col-4 menu-left-item">
-                <a href="/fans"><img width="45" src="/iconos/icono-guitarraElectrica.svg" alt=""></a>
+    <section class="menu-left__content">
+        <div class="menu-left__header">
+            <h3>Secciones</h3> 
+            <a id="toggle-button-close2" href="#" class="menu__close-btn" aria-label="Cerrar">
+                <i class="fa-regular fa-circle-xmark"></i>
+            </a>
+        </div>
+        <div class="menu-left__grid">
+            <a href="/fans" class="menu-left__item">
+                <img width="40" height="40" src="/iconos/icono-guitarraElectrica.svg" alt="Fans">
                 <p>Para los fans</p>
-            </div>
-            <div class="col-4 menu-left-item">
-                <a href="/products/artists"><img width="45" src="/iconos/icono-mensaje.svg" alt=""></a>
+            </a>
+            <a href="/products/artists" class="menu-left__item">
+                <img width="40" height="40" src="/iconos/icono-mensaje.svg" alt="Artistas">
                 <p>Artistas</p>
-            </div>
-            <div class="col-4 menu-left-item">
-                <a href="/capsule"><img width="45" src="/iconos/icono-relojArena.svg" alt=""></a>
+            </a>
+            <a href="/capsule" class="menu-left__item">
+                <img width="40" height="40" src="/iconos/icono-relojArena.svg" alt="Cápsula">
                 <p>Cápsula del tiempo</p>
-            </div>
+            </a>
         </div>
     </section>
-    <section>
-        <h6>Noticias</h6>
-    </section>
+    <section class="menu-left__news">
+        <h3>Noticias</h3>
+        </section>
 </div>
-
 
 <%- include('modalLogin') %>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuLeft = document.querySelector(".menu-left");
+        const toggleBars = document.getElementById("toggle-bars");
+        const toggleClose2 = document.getElementById("toggle-button-close2");
 
-
-<!--     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleButton = document.getElementById("toggle-button");
-            const menuright = document.querySelector(".menu-right");
-
-            toggleButton.addEventListener("click", function (event) {
-                event.preventDefault();
-                menuright.classList.toggle("menu-right-visible");
+        // Abrir menú lateral izquierdo
+        if(toggleBars) {
+            toggleBars.addEventListener("click", function (e) {
+                e.preventDefault();
+                menuLeft.classList.toggle("menu-left-visible");
             });
-        });
-    </script> -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleButtonClose = document.getElementById("toggle-button-close");
-            const menuright = document.querySelector(".menu-right");
+        }
 
-            toggleButtonClose.addEventListener("click", function (event) {
-                event.preventDefault();
-                menuright.classList.toggle("menu-right-visible");
+        // Cerrar menú lateral izquierdo
+        if(toggleClose2) {
+            toggleClose2.addEventListener("click", function (e) {
+                e.preventDefault();
+                menuLeft.classList.remove("menu-left-visible");
             });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleButton = document.getElementById("toggle-bars");
-            const menuleft = document.querySelector(".menu-left");
+        }
 
-            toggleButton.addEventListener("click", function (event) {
-                event.preventDefault();
-                menuleft.classList.toggle("menu-left-visible");
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleButtonClose2 = document.getElementById("toggle-button-close2");
-            const menuleft = document.querySelector(".menu-left");
-
-            toggleButtonClose2.addEventListener("click", function (event) {
-                event.preventDefault();
-                menuleft.classList.toggle("menu-left-visible");
-            });
-        });
-    </script>
-    <script>
-        const openLoginModalLink = document.getElementById('open-login-modal-link');
+        // Lógica Modal Login
+        const openLoginLink = document.getElementById('open-login-modal-link');
         const loginModal = document.getElementById('login-modal');
 
-        loginModal.style.display = 'none';
-
-        openLoginModalLink.addEventListener('click', (event) => {
-            event.preventDefault();
-            loginModal.style.display = 'flex';
-        });
-
-        const closeLoginModal = () => {
+        if (loginModal) {
             loginModal.style.display = 'none';
-        };
 
-        window.addEventListener('click', (event) => {
-            if (event.target === loginModal) {
-                closeLoginModal();
+            if (openLoginLink) {
+                openLoginLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loginModal.style.display = 'flex';
+                });
             }
-        });
 
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                closeLoginModal();
-            }
-        });
+            const closeLoginModal = () => { loginModal.style.display = 'none'; };
 
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) closeLoginModal();
+            });
 
-    </script>
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLoginModal();
+            });
+        }
+    });
+</script>
