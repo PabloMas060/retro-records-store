@@ -17,6 +17,41 @@ font-family: 'Exo 2', sans-serif;
     --animation-duration: .3s;
 } */
 
+
+/* Variables de Diseño Premium */
+:root {
+    --bg-main: #0b0c10;       /* Negro profundo de fondo */
+    --bg-card: #1f2833;       /* Gris oscuro azulado para tarjetas y secciones */
+    --text-main: #f5f5f7;     /* Blanco nítido para títulos (estilo Apple) */
+    --text-muted: #c5a059;    /* Dorado elegante ocre para subtítulos/detalles */
+    --text-body: #969faa;     /* Gris claro para textos largos y párrafos */
+    --accent: #1db954;        /* Verde Spotify (o cambialo por el color insignia de tu marca) */
+    --border-color: rgba(255, 255, 255, 0.08);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Reseteo básico moderno */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-body);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+--------------
+
 :root {
     --varColor5: #8B0000;       /* Rojo oscuro */
     --varColor4: #FFD700;       /* Amarillo mostaza */
