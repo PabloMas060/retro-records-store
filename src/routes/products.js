@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { albumAdd, albumCreate, mercheAdd, mercheCreate, listArtists, bandDetail, bandAdd, bandCreate, editBand, updateBand, addAlbum, storeAlbum, editAlbum, updateAlbum, addMerch, storeMerch, editMerch, updateMerch,albumDetail, merchDetail, albumRemove, merchRemove, bandRemove } = require('../controllers/productsController');
+const { albumAdd, albumCreate, mercheAdd, mercheCreate, listArtists, bandDetail, bandAdd, bandCreate, editBand, updateBand, addAlbum, storeAlbum, editAlbum, updateAlbum, addMerch, storeMerch, editMerch, updateMerch,albumDetail, merchDetail, albumRemove, merchRemove, bandRemove, allAlbums, allMerchs } = require('../controllers/productsController');
 const { upload } = require('../middlewares/upload');
 const addAlbumValidator = require('../validation/addAlbumValidator');
 const addMercheValidator = require('../validation/addMercheValidator');
@@ -26,6 +26,8 @@ router
   .get('/artists', listArtists)
   .get('/artists/detail/:id', bandDetail)
   .get('/addBand', bandAdd)
+  .get('/albums', allAlbums)
+  .get('/merchs', allMerchs)
   .post('/addBand', uploadBand.fields([
     {
       name: "image",

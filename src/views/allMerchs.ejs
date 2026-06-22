@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<%- include('partials/head',{ title : 'Merchandising' }) %>
+
+<body class="catalog__body catalog__body--merch">
+
+    <%- include('partials/header') %>
+
+    <main class="catalog__main">
+
+        <!-- PAGE HEADER -->
+        <div class="catalog__hero">
+            <div class="container">
+                <p class="catalog__eyebrow">TIENDA</p>
+                <h1 class="catalog__title">Merchandising</h1>
+                <p class="catalog__subtitle">Remeras, accesorios y productos oficiales de tus bandas favoritas.</p>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <!-- FILTROS -->
+             
+            <div class="catalog__filters">
+                <a href="?page=1" class="filter__btn <%= !activeBand ? 'filter__btn--active' : '' %>">
+                    Todos
+                </a>
+                <% bands.forEach(band => { %>
+                    <a href="?band=<%= band.id %>&page=1"
+                       class="filter__btn <%= activeBand == band.id ? 'filter__btn--active' : '' %>">
+                        <%= band.name %>
+                    </a>
+                <% }) %>
+            </div>
+
+            <!-- RESULTADOS COUNT -->
+            <div class="catalog__meta">
+                <span class="catalog__count"><%= totalCount %> productos encontrados</span>
+            </div>
+
+            <!-- GRID -->
+             
+            <% if(merchs.length === 0) { %>
+                <span class="catalog__card-type">
+    <i class="fa-solid fa-tag"></i>
+    <%= merch.type ? merch.type.name : '' %>
+</span>
+                <div class="catalog__empty">
+                    <i class="fa-solid fa-shirt"></i>
+                    <p>No hay productos en esta categoría todavía.</p>
+                </div>
+            <% } else { %>
+                <div class="catalog__grid catalog__grid--merch">
+                    <% merchs.forEach(merch => { %>
+                        <a href="/products/merchs/detail/<%= merch.id %>" class="catalog__card catalog__card--merch">
+
+                            <div class="catalog__card-media catalog__card-media--white">
+                                <img src="/images/merch/<%= merch.image %>"
+                                     alt="<%= merch.name %>"
+                                     class="catalog__card-img catalog__card-img--contain">
+                                <div class="catalog__card-overlay">
+                                    <span class="catalog__card-cta">Ver producto</span>
+                                </div>
+                                <% if(merch.exclusive) { %>
+                                    <span class="catalog__badge catalog__badge--exclusive">Exclusivo</span>
+                                <% } %>
+                                <% if(merch.discount > 0) { %>
+                                    <span class="catalog__badge catalog__badge--discount">-<%= merch.discount %>%</span>
+                                <% } %>
+                            </div>
+
+                            <div class="catalog__card-info">
+                                <p class="catalog__card-band"><%= merch.band ? merch.band.name : '' %></p>
+                                <h3 class="catalog__card-title"><%= merch.name %></h3>
+                                <div class="catalog__card-footer">
+                                    <span class="catalog__card-type"><%= merch.type ? merch.type.name : '' %></span>
+                                    <div class="catalog__card-price-wrap">
+                                        <% if(merch.discount > 0) { %>
+                                            <span class="catalog__card-price--old">$<%= merch.price %></span>
+                                            <span class="catalog__card-price">$<%= Math.round(merch.price * (1 - merch.discount/100)) %></span>
+                                        <% } else { %>
+                                            <span class="catalog__card-price">$<%= merch.price %></span>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </a>
+                    <% }) %>
+                </div>
+            <% } %>
+
+            <!-- PAGINACIÓN -->
+            <% if(totalPages > 1) { %>
+                <div class="catalog__pagination">
+
+                    <% if(currentPage > 1) { %>
+                        <a href="?<%= activeBand ? 'band=' + activeBand + '&' : '' %>page=<%= currentPage - 1 %>"
+                           class="pagination__btn pagination__btn--prev">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </a>
+                    <% } else { %>
+                        <span class="pagination__btn pagination__btn--disabled">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </span>
+                    <% } %>
+
+                    <div class="pagination__pages">
+                        <% for(let i = 1; i <= totalPages; i++) { %>
+                            <% if(i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) { %>
+                                <a href="?<%= activeBand ? 'band=' + activeBand + '&' : '' %>page=<%= i %>"
+                                   class="pagination__page <%= currentPage === i ? 'pagination__page--active' : '' %>">
+                                    <%= i %>
+                                </a>
+                            <% } else if(i === currentPage - 2 || i === currentPage + 2) { %>
+                                <span class="pagination__dots">…</span>
+                            <% } %>
+                        <% } %>
+                    </div>
+
+                    <% if(currentPage < totalPages) { %>
+                        <a href="?<%= activeBand ? 'band=' + activeBand + '&' : '' %>page=<%= currentPage + 1 %>"
+                           class="pagination__btn pagination__btn--next">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    <% } else { %>
+                        <span class="pagination__btn pagination__btn--disabled">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+                    <% } %>
+
+                </div>
+            <% } %>
+
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<%- include('partials/head',{ title : 'Vinilos' }) %>
+
+<body class="catalog__body">
+
+    <%- include('partials/header') %>
+
+    <main class="catalog__main">
+
+        <!-- PAGE HEADER -->
+        <div class="catalog__hero">
+            <div class="container">
+                <p class="catalog__eyebrow">COLECCIÓN</p>
+                <h1 class="catalog__title">Vinilos</h1>
+                <p class="catalog__subtitle">Explorá álbumes legendarios y nuevas ediciones en vinilo.</p>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <!-- FILTROS -->
+            <div class="catalog__filters">
+                <a href="?page=1" class="filter__btn <%= !activeBand ? 'filter__btn--active' : '' %>">
+                    Todos
+                </a>
+                <% bands.forEach(band => { %>
+                    <a href="?band=<%= band.id %>&page=1"
+                       class="filter__btn <%= activeBand == band.id ? 'filter__btn--active' : '' %>">
+                        <%= band.name %>
+                    </a>
+                <% }) %>
+            </div>
+
+            <!-- RESULTADOS COUNT -->
+            <div class="catalog__meta">
+                <span class="catalog__count"><%= totalCount %> vinilos encontrados</span>
+            </div>
+
+            <!-- GRID -->
+            <% if(albums.length === 0) { %>
+                <div class="catalog__empty">
+                    <i class="fa-solid fa-record-vinyl"></i>
+                    <p>No hay vinilos en esta categoría todavía.</p>
+                </div>
+            <% } else { %>
+                <div class="catalog__grid">
+                    <% albums.forEach(album => { %>
+                        <a href="/products/albums/detail/<%= album.id %>" class="catalog__card">
+
+                            <div class="catalog__card-media">
+                                <img src="/images/albums/<%= album.image %>"
+                                     alt="<%= album.title %>"
+                                     class="catalog__card-img">
+                                <div class="catalog__card-overlay">
+                                    <span class="catalog__card-cta">Ver vinilo</span>
+                                </div>
+                                <% if(album.exclusive) { %>
+                                    <span class="catalog__badge catalog__badge--exclusive">Exclusivo</span>
+                                <% } %>
+                                <% if(album.discount > 0) { %>
+                                    <span class="catalog__badge catalog__badge--discount">-<%= album.discount %>%</span>
+                                <% } %>
+                            </div>
+
+                            <div class="catalog__card-info">
+                                <p class="catalog__card-band"><%= album.band ? album.band.name : '' %></p>
+                                <h3 class="catalog__card-title"><%= album.title %></h3>
+                                <div class="catalog__card-footer">
+                                    <span class="catalog__card-year"><%= album.year %></span>
+                                    <div class="catalog__card-price-wrap">
+                                        <% if(album.discount > 0) { %>
+                                            <span class="catalog__card-price--old">$<%= album.price %></span>
+                                            <span class="catalog__card-price">$<%= Math.round(album.price * (1 - album.discount/100)) %></span>
+                                        <% } else { %>
+                                            <span class="catalog__card-price">$<%= album.price %></span>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </a>
+                    <% }) %>
+                </div>
+            <% } %>
+
+            <!-- PAGINACIÓN -->
+            <% if(totalPages > 1) { %>
+                <div class="catalog__pagination">
+
+                    <% if(currentPage > 1) { %>
+                        <a href="?<%= activeBand ? 'band=' + activeBand + '&' : '' %>page=<%= currentPage - 1 %>"
+                           class="pagination__btn pagination__btn--prev">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </a>
+                    <% } else { %>
+                        <span class="pagination__btn pagination__btn--disabled">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </span>
+                    <% } %>
+
+                    <div class="pagination__pages">
+                        <% for(let i = 1; i <= totalPages; i++) { %>
+                            <% if(i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) { %>
+                                <a href="?<%= activeBand ? 'band=' + activeBand + '&' : '' %>page=<%= i %>"
+                                   class="pagination__page <%= currentPage === i ? 'pagination__page--active' : '' %>">
+                                    <%= i %>
+                                </a>
+                            <% } else if(i === currentPage - 2 || i === currentPage + 2) { %>
+                                <span class="pagination__dots">…</span>
+                            <% } %>
+                        <% } %>
+                    </div>
+
+                    <% if(currentPage < totalPages) { %>
+                        <a href="?<%= activeBand ? 'band=' + activeBand + '&' : '' %>page=<%= currentPage + 1 %>"
+                           class="pagination__btn pagination__btn--next">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    <% } else { %>
+                        <span class="pagination__btn pagination__btn--disabled">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+                    <% } %>
+
+                </div>
+            <% } %>
+
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

@@ -2,169 +2,106 @@
 <html lang="es">
 <%- include('partials/head',{ title : 'HOME' }) %>
 
-<body class="home__body">
-    <%- include('partials/header') %>
+    <body class="home__body">
 
-    <header class="home__hero">
-        <div class="hero__overlay"></div>
-        <img src="/banner-gif01.gif" alt="Retro Records Store" class="hero__img">
-        <div class="hero__content">
-            <h1 class="hero__title">RETRO RECORDS STORE</h1>
-            <p class="hero__subtitle">El templo de los clásicos en vinilo y merchandising oficial.</p>
-        </div>
-    </header>
+        <%- include('partials/header') %>
 
-    <main class="container">
-        
-        <section class="shortcut__section">
-            <div class="shortcut__grid">
-                
-               <!--  <a href="/fans" class="shortcut__card">
-                    <div class="shortcut__icon-wrapper">
-                        <i class="fa-solid fa-users-rays shortcut__icon-modern"></i>
+        <main class="home">
+
+            <!-- HERO -->
+            <section class="hero">
+                <div class="hero__bg">
+                    <img src="/hero.png" alt="Retro Records Store" class="hero__bg-img">
+                    <div class="hero__overlay"></div>
+                </div>
+
+                <div class="hero__content">
+                    <h1 class="hero__title">
+                        RETRO<br>
+                        <span class="hero__title--gold">RECORDS</span><br>
+                        STORE
+                    </h1>
+
+                    <div class="hero__divider"></div>
+
+                    <p class="hero__subtitle">
+                        Descubrí bandas legendarias, vinilos exclusivos
+                        y merchandising oficial en un solo lugar.
+                    </p>
+
+                    <a href="/products/albums" class="hero__button">
+                        EXPLORAR TIENDA
+                    </a>
+                </div>
+            </section>
+
+            <!-- ACCESOS RÁPIDOS -->
+            <section class="shortcut__section">
+                <div class="container">
+                    <div class="shortcut__grid">
+
+                        <a href="/products/albums" class="shortcut__card">
+                            <div class="shortcut__icon-wrapper">
+                                <i class="fa-solid fa-record-vinyl shortcut__icon-modern"></i>
+                            </div>
+                            <div class="shortcut__text">
+                                <span class="shortcut__label">Colección de Vinilos</span>
+                                <p class="shortcut__desc">Explorá álbumes legendarios y nuevas ediciones en vinilo.</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right shortcut__arrow"></i>
+                        </a>
+
+                        <a href="/products/merchs" class="shortcut__card">
+                            <div class="shortcut__icon-wrapper">
+                                <i class="fa-solid fa-shirt shortcut__icon-modern"></i>
+                            </div>
+                            <div class="shortcut__text">
+                                <span class="shortcut__label">Merchandising Oficial</span>
+                                <p class="shortcut__desc">Encontrá remeras, accesorios y artículos exclusivos de tus bandas favoritas.</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right shortcut__arrow"></i>
+                        </a>
+
+                        <a href="/products/artists" class="shortcut__card">
+                            <div class="shortcut__icon-wrapper">
+                                <i class="fa-solid fa-guitar shortcut__icon-modern"></i>
+                            </div>
+                            <div class="shortcut__text">
+                                <span class="shortcut__label">Bandas y Artistas</span>
+                                <p class="shortcut__desc">Explorá el catálogo completo de bandas y artistas de la tienda.</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right shortcut__arrow"></i>
+                        </a>
+
                     </div>
-                    <span class="shortcut__label">Para los fans</span>
-                    <p class="shortcut__desc">Comunidad, novedades y contenido exclusivo del rock.</p>
-                </a> -->
+                </div>
+            </section>
 
-                <a href="/fans" class="shortcut__card">
-                    <div class="shortcut__icon-wrapper">
-                        <i class="fa-solid fa-compact-disc shortcut__icon-modern"></i>
+            <!-- SECCIONES DE BANDAS -->
+            <section class="bands__section">
+                <div class="container">
+                    <div class="bands__category-header">
+                        <h2 class="bands__category-title">BANDAS Y ARTISTAS</h2>
+                        <div class="bands__category-line"></div>
+                        <a href="/products/artists" class="bands__ver-mas">Ver todas <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
-                    <span class="shortcut__label">Music Player</span>
-                    <p class="shortcut__desc">Sintonizá y escuchá muestras de tus discos favoritos.</p>
-                </a>
 
-                <a href="/products/artists" class="shortcut__card">
-                    <div class="shortcut__icon-wrapper">
-                        <i class="fa-solid fa-bolt-lightning shortcut__icon-modern"></i>
+                    <div class="bands__grid">
+                        <% bands.forEach(({id, image, name}) => { %>
+                            <a href="/products/artists/detail/<%= id %>" class="poster__card">
+                                <div class="poster__img-wrapper">
+                                    <img src="/images/bands/<%= image %>" alt="<%= name %>" class="poster__img">
+                                    <div class="poster__overlay"></div>
+                                </div>
+                                <span class="poster__name"><%= name %></span>
+                            </a>
+                        <% }) %>
                     </div>
-                    <span class="shortcut__label">Todos los artistas</span>
-                    <p class="shortcut__desc">Explorá el catálogo completo de leyendas y emergentes.</p>
-                </a>
-
-            </div>
-        </section>
-
-        <section class="music__section">
-            <div class="section__header">
-                <h2 class="section__title">Iconos del Rock</h2>
-                <p class="section__subtitle">Los artistas que marcaron la historia para siempre.</p>
-            </div>
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <% bands.forEach(({id, mainImage, categoryId}) => { %>
-                        <% if (categoryId === 1) { %>
-                            <div class="swiper-slide">
-                                <article class="music__card">
-                                    <a href="/products/artists/detail/<%= id %>" class="card__link">
-                                        <div class="card__img-wrapper">
-                                            <img class="card__img" src="/images/bands/<%= mainImage %>" alt="Artista">
-                                        </div>
-                                    </a>
-                                </article>
-                            </div>
-                        <% } %>
-                    <% }) %>
                 </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
+            </section>
+        </main>
 
-        <section class="music__section">
-            <div class="section__header">
-                <h2 class="section__title">Clásicos</h2>
-                <p class="section__subtitle">Bandas con más de 30 años de pura trayectoria.</p>
-            </div>
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <% bands.forEach(({id, mainImage, categoryId}) => { %>
-                        <% if (categoryId === 4) { %>
-                            <div class="swiper-slide">
-                                <article class="music__card">
-                                    <a href="/products/artists/detail/<%= id %>" class="card__link">
-                                        <div class="card__img-wrapper">
-                                            <img class="card__img" src="/images/bands/<%= mainImage %>" alt="Artista">
-                                        </div>
-                                    </a>
-                                </article>
-                            </div>
-                        <% } %>
-                    <% }) %>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
+        <%- include('partials/footer') %>
 
-        <section class="music__section">
-            <div class="section__header">
-                <h2 class="section__title">Orgullo Nacional 🇦🇷</h2>
-                <p class="section__subtitle">El legado musical que define nuestra identidad.</p>
-            </div>
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <% bands.forEach(({id, mainImage, categoryId}) => { %>
-                        <% if (categoryId === 2) { %>
-                            <div class="swiper-slide">
-                                <article class="music__card">
-                                    <a href="/products/artists/detail/<%= id %>" class="card__link">
-                                        <div class="card__img-wrapper">
-                                            <img class="card__img" src="/images/bands/<%= mainImage %>" alt="Artista">
-                                        </div>
-                                    </a>
-                                </article>
-                            </div>
-                        <% } %>
-                    <% }) %>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
-
-        <section class="music__section">
-            <div class="section__header">
-                <h2 class="section__title">Indies que apoyamos</h2>
-                <p class="section__subtitle">Descubrí a los nuevos talentos de la escena emergente.</p>
-            </div>
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <% bands.forEach(({id, mainImage, categoryId}) => { %>
-                        <% if (categoryId === 3) { %>
-                            <div class="swiper-slide">
-                                <article class="music__card">
-                                    <a href="/products/artists/detail/<%= id %>" class="card__link">
-                                        <div class="card__img-wrapper">
-                                            <img class="card__img" src="/images/bands/<%= mainImage %>" alt="Artista">
-                                        </div>
-                                    </a>
-                                </article>
-                            </div>
-                        <% } %>
-                    <% }) %>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
-
-    </main>
-
-    <%- include('partials/footer') %>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1.2, // Deja ver un pedacito de la siguiente en móvil
-            spaceBetween: 16,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            breakpoints: {
-                480: { slidesPerView: 2, spaceBetween: 20 },
-                768: { slidesPerView: 3, spaceBetween: 24 },
-                1024: { slidesPerView: 4.5, spaceBetween: 30 } // Visión amplia en escritorio
-            },
-        });
-    </script>
-</body>
+    </body>
 </html>

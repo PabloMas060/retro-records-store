@@ -18,6 +18,7 @@ module.exports = {
         const categories = db.Category.findAll()
         Promise.all([bands,categories])
             .then(([bands,categories]) => {
+                console.log(bands[0].dataValues) 
                 return res.render('index',{
                     bands,
                     categories
