@@ -1,64 +1,63 @@
-import {Formik,Field,ErrorMessage} from 'formik';
-import { Form,Row,Col,Button  } from "react-bootstrap";
+import { Formik, Field, ErrorMessage } from 'formik';
+import { Form, Button } from "react-bootstrap";
 import * as Yup from 'yup';
 import styles from './index.module.css';
 import useMusic from '../../hooks/useMusic';
-export const SearchForm = ()=>{
-const {getData} = useMusic()
 
-    const initialValues ={
-      name:"",
-        
-    } 
+export const SearchForm = () => {
 
-const validationSchema = Yup.object({
-    name: Yup.string().required('El nombre es obligatorio'),
-   
-})
+    const { getData } = useMusic();
 
+    const initialValues = {
+        name: "",
+    };
 
-const handleSubmit = (values) =>{
+    const validationSchema = Yup.object({
+        name: Yup.string().required('Ingresá un artista o canción'),
+    });
 
-getData(values.name)
+   const handleSubmit = (values) => {
+    console.log("Buscando:", values.name)
+    getData(values.name)
 }
 
+    return (
+        <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+        >
+            {(formik) => (
 
-    return(
-      <Formik initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-      >
-{
-    (formik)=>(
-        <Form onSubmit={formik.handleSubmit} className={styles.formEdition}>
-            <Row>
-                <Col >
-                    <Form.Group>
-                      
-                        <Field id='name' type='text' placeholder='Busca tu track favorito' name='name' as={Form.Control} className={styles.formImput}/>
-<ErrorMessage name='name' component={Form.Text} className={styles.errorMessageForm} />
-                        
-                    </Form.Group>
-                </Col>
+                <Form
+                    onSubmit={formik.handleSubmit}
+                    className={styles.formEdition}
+                >
 
+                    <Field
+                        id="name"
+                        type="text"
+                        name="name"
+                        placeholder="Buscar artista, canción o álbum..."
+                        as={Form.Control}
+                        className={styles.formInput}
+                    />
 
+                    <ErrorMessage
+                        name="name"
+                        component="div"
+                        className={styles.errorMessageForm}
+                    />
 
-               
-            </Row>
-            <Row className='justify-content-end mt-3'>
-                <Col >
-<Button className={styles.buttonSubmit} type='submit'>
-Buscar Track
-</Button>
+                    <Button
+                        className={styles.buttonSubmit}
+                        type="submit"
+                    >
+                        Buscar
+                    </Button>
 
-                </Col>
-            </Row>
-        </Form>
-
-    )
-}
-
-
-      </Formik>
-    )
-}
+                </Form>
+            )}
+        </Formik>
+    );
+};

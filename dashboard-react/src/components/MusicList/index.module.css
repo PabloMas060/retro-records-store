@@ -1,51 +1,31 @@
 .fondo{
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    margin: 2px;
-    border-radius: 9px;
-    height: 100%;
-    padding-bottom: 20px;
+    min-height:300px;
 }
 
-.boxLogo{
-display: flex;
-justify-content: center;
+.messageBox{
+    width:100%;
+
+    padding:60px;
+
+    text-align:center;
+
+    background:rgba(10,15,35,.75);
+
+    border:1px solid rgba(214,176,94,.15);
+
+    border-radius:24px;
 }
 
-.logo{
-    width:50px;
-    margin-left: 90px;
-    animation-duration:  4s  infinite;
-    animation-name: slidein;
+.messageBox h3{
+    color:white;
+
+    font-weight:700;
+
+    margin-bottom:10px;
 }
 
+.messageBox p{
+    color:#a7b0be;
 
-.imagesLogoError{
-    height: 140px;
-    margin-left: 130px;
+    margin:0;
 }
-
-@media (max-width:500px){
-    .imagesLogoError{
-        height: 140px;
-      margin-left: 120px;;
-    }
-
-    .imagesLogo{
- 
-    margin-left: 70px;
-   
-}
-  }
-
-@keyframes slidein {
-    from {
-        position: relative;
-        top: 20px;
-    }
-  
-    to {
-        position: relative;
-        top: 0px;
-    }
-  }

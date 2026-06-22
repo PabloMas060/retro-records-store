@@ -1,99 +1,105 @@
 .backgroundModal{
-    background-color: #262626;
-    border-radius: 9px;
-   
+    background: linear-gradient(
+        135deg,
+        rgba(10,15,35,.98),
+        rgba(5,10,25,.98)
+    );
+
+    border:1px solid rgba(214,176,94,.15);
+
+    border-radius:24px;
+
+    overflow:hidden;
 }
 
 .EffectAnimation{
-    animation-duration: 0.6s;
-    animation-name: slidein;
-   
- 
+    animation-duration:.5s;
+    animation-name:slidein;
 }
 
-
-@keyframes slidein {
-    from {
-     opacity: 0;
-     position: relative;
-     top: 20px;
+@keyframes slidein{
+    from{
+        opacity:0;
+        transform:translateY(20px);
     }
-  
-    to {
-        opacity: 1;
-        position: relative;
-        top: 0px;
+
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
-  }
-
-
-
-
-
-.NameSong{
-    color:rgba(157, 157, 157, 1);
-    font-size: 25px;
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    overflow: hidden; /* Oculta el contenido que no cabe en el contenedor */
-    text-overflow: ellipsis; 
 }
 
 .FlexModal{
-
-    padding: 10px;
-    margin-top: 50px
+    margin-top:40px;
 }
 
 .ImgModal{
-    padding: 15px;
-}
+    width:100%;
+    height:100%;
 
-.audioModal{
-   
-      
-        background-color: #27a800;
-        border: 1px solid #000000;
-        border-radius: 24px;
-        padding: 2px;
-      
+    min-height:420px;
+
+    object-fit:cover;
+
+    padding:0;
 }
 
 .FlexModalName{
-    display: flex;
-    flex-direction: column;
-    
+    border:none !important;
+    background:transparent !important;
 }
 
-.progress::-webkit-progress-value {
-    background-color: rgb(0, 233, 0);
-  /* Para navegadores basados en WebKit (Chrome, Safari, etc.) */
-  }
+.NameSong{
+    color:white;
 
+    font-size:1.2rem;
 
-.progress{
-    vertical-align: baseline;
-   
-    border: solid #000000;
+    font-weight:700;
 
-    background-color: black;
-    margin-top: 5px;
-    margin-left: 8px
+    margin-bottom:14px;
 }
 
 .PopularityName{
-    color:rgba(157, 157, 157, 1);
+    color:#b0b7c3;
+
+    margin-bottom:8px;
+}
+
+.progress{
+    width:100%;
+    height:10px;
+
+    border:none;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+}
+
+.progress::-webkit-progress-bar{
+    background:rgba(255,255,255,.08);
+}
+
+.progress::-webkit-progress-value{
+    background:#d6b05e;
+}
+
+.audioModal{
+    width:100%;
+
+    margin-top:20px;
+}
+
+.audioModal::-webkit-media-controls-panel{
+    background:#d6b05e;
 }
 
 .videoEdit{
-    height: 110px;
-    margin-left: 25px;
+    display:none;
 }
 
-
-
-@media (max-width:390px){
-    .ResponsiveImg{
-        display: none;
-    }
-    
-  }
+.ResponsiveImg{
+    display:none;
+}
