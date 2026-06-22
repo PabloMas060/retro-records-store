@@ -1,174 +1,343 @@
 <!DOCTYPE html>
 <html>
 
-<%- include('../partials/head',{ title : 'ADMIN' }) %>
+<%- include('../partials/head',{ title : 'Agregar Banda — Admin' }) %>
 
-    <body>
-        <%- include('../partials/header') %>
+<body class="admin__body">
+    <%- include('../partials/header') %>
 
-            <main class="container">
-                <div class="row">
-                    <div class="col-12 mt-4 text-start">
-                        <a class="btn btn-dark" style="cursor: pointer;" href="/users/admin">Volver al panel de administración</a>
-                    </div>
-                    <div class="col-12 mb-4 mt-4 text-center">
-                        <h3>Agrega una nueva banda</h3>
-                    </div>
-                    <div class="col-md-8 mx-auto text-center">
-                        <form class="row align-items-center mb-5" style="border-radius: 7px; box-shadow: 2px 5px 10px 5px black;" id="bandForm" action="/products/addBand" method="POST" enctype="multipart/form-data">
-                            <div class="col-md-8 mb-3 mt-3">
-                                <label for="name" class="form-label">Nombre de la Banda</label>
-                                <input type="text" class="form-control <%= locals.errors && (errors.name && 'is-invalid') %>" id="name" name="name" value="<%= locals.old && (old.name && old.name) %>">
-                                <small class="ms-2 text-danger" id="msgError-name">
-                                    <%= locals.errors && (errors.name && errors.name.msg) %>
-                                </small>
-                            </div>
+    <div class="add-form__page-wrapper">
+        <div class="add-form__container">
 
-                            <div class="col-md-6 mb-3">
-                                <label for="categoryId" class="form-label">Categoría</label>
-                              <select class="form-select" name="categoryId" id="categoryId">
-                                <option selected hidden value="">Seleccione...</option>
+            <!-- Navegación -->
+            <nav class="add-form__back-nav">
+                <a href="/users/admin" class="back-nav__link">
+                    <i class="fa-solid fa-arrow-left"></i> Volver al panel
+                </a>
+            </nav>
+
+            <!-- Encabezado -->
+       <div class="add-form__header">
+    <div class="add-form__header-icon">
+        <i class="fa-solid fa-guitar"></i>
+    </div>
+
+    <div class="add-form__header-content">
+        <span class="add-form__eyebrow">ADMINISTRACIÓN</span>
+
+        <h1 class="add-form__title">
+            Nueva Banda
+        </h1>
+
+        <p class="add-form__subtitle">
+            Sumá un nuevo artista al catálogo oficial de Retro Records Store.
+        </p>
+    </div>
+</div>
+
+            <!-- Formulario -->
+            <form
+                class="add-form__card"
+                id="bandForm"
+                action="/products/addBand"
+                method="POST"
+                enctype="multipart/form-data"
+                onsubmit="return validarBanda()"
+            >
+
+                <!-- ── SECCIÓN: IDENTIDAD ── -->
+                <div class="add-form__section">
+                    <h2 class="add-form__section-title">
+                        <span class="add-form__section-num">01</span> Identidad
+                    </h2>
+
+                    <div class="add-form__grid">
+
+                        <div class="add-form__field add-form__field--wide">
+                            <label class="add-form__label" for="name">Nombre de la banda</label>
+                            <input
+                                type="text"
+                                class="add-form__input <%= locals.errors && errors.name ? 'is-invalid' : '' %>"
+                                id="name"
+                                name="name"
+                                placeholder="Ej: Led Zeppelin"
+                                value="<%= locals.old && old.name ? old.name : '' %>"
+                            >
+                            <% if (locals.errors && errors.name) { %>
+                                <span class="add-form__error"><%= errors.name.msg %></span>
+                            <% } %>
+                        </div>
+
+                        <div class="add-form__field">
+                            <label class="add-form__label" for="categoryId">Categoría</label>
+                            <select class="add-form__input add-form__select" name="categoryId" id="categoryId">
+                                <option selected hidden value="">Seleccioná...</option>
                                 <% categories.forEach(category => { %>
-                                    <option value="<%= category.id %>">
-                                        <%= category.name %>
-                                    </option>
+                                    <option value="<%= category.id %>"><%= category.name %></option>
                                 <% }) %>
-                              </select>
-                                <small class="ms-2 text-danger" id="msgError-categoryId">
-                                    <%= locals.errors && (errors.categoryId && errors.categoryId.msg) %>
-                                </small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="phrase" class="form-label">Frase</label>
-                                <input type="text" class="form-control <%= locals.errors && (errors.phrase && 'is-invalid') %>" id="phrase" name="phrase" value="<%= locals.old && (old.phrase && old.phrase) %>">
-                                <small class="ms-2 text-danger" id="msgError-phrase">
-                                    <%= locals.errors && (errors.phrase && errors.phrase.msg) %>
-                                </small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="dateFounded" class="form-label">Fecha de Inicio</label>
-                                <input type="number" class="form-control <%= locals.errors && (errors.dateFounded && 'is-invalid') %>" id="dateFounded" name="dateFounded" value="<%= locals.old && (old.dateFounded && old.dateFounded) %>">
-                                <small class="ms-2 text-danger" id="msgError-dateFounded">
-                                    <%= locals.errors && (errors.dateFounded && errors.dateFounded.msg) %>
-                                </small>
-                            </div>
-                            <div class="col-md-6 mt-3">
-                                <div>
-                                    <label for="dateEnded" class="form-label">Fecha de Finalización</label>
-                                    <input type="number" class="form-control" id="dateEnded" name="dateEnded" value="<%= locals.old && (old.dateEnded && old.dateEnded) %>">
-                                    <small class="ms-2 text-danger" id="msgError-dateEnded">
-                                        <%= locals.errors && (errors.dateEnded && errors.dateEnded.msg) %>
-                                    </small>
-                                </div>
-                                <div>
-                                    <label for="vigente" class="form-label">Banda Vigente</label>
-                                    <input type="checkbox" id="vigente" name="vigente" onclick="toggleFechaFinalizacion()">
-                                </div>
-                            </div>
-                           
-                            <div class="col-md-6 mb-3">
-                                <label for="totalShows" class="form-label">Total de Conciertos</label>
-                                <input type="number" class="form-control <%= locals.errors && (errors.totalShows && 'is-invalid') %>" id="totalShows" name="totalShows" value="<%= locals.old && (old.totalShows && old.totalShows) %>">
-                                <small class="ms-2 text-danger" id="msgError-totalShows">
-                                    <%= locals.errors && (errors.totalShows && errors.totalShows.msg) %>
-                                </small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="nextShows" class="form-label">Próximo Concierto</label>
-                                <input type="date" class="form-control <%= locals.errors && (errors.nextShows && 'is-invalid') %>" id="nextShows" name="nextShows" value="<%= locals.old && (old.nextShows && old.nextShows) %>">
-                                <small class="ms-2 text-danger" id="msgError-nextShows">
-                                    <%= locals.errors && (errors.nextShows&& errors.nextShows.msg) %>
-                                </small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="history" class="form-label">Historia</label>
-                                <textarea class="form-control <%= locals.errors && (errors.history && 'is-invalid') %>" id="history" name="history"
-                                    rows="3"><%= locals.old && (old.history && old.history) %></textarea>
-                                    <small class="ms-2 text-danger" id="msgError-history">
-                                        <%= locals.errors && (errors.history && errors.history.msg) %>
-                                    </small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="resume" class="form-label">Resumen</label>
-                                <textarea class="form-control <%= locals.errors && (errors.resume && 'is-invalid') %>" id="resume" name="resume" rows="3"><%= locals.old && (old.resume && old.resume) %></textarea>
-                                <small class="ms-2 text-danger" id="msgError-resume">
-                                    <%= locals.errors && (errors.resume && errors.resume.msg) %>
-                                </small>
-                            </div>
-                            <div class="col-md-12 d-flex justify-content-evenly">
-                                <label for="mainImage" class="btn btn-secondary">Portada de la Banda</label>
-                                <input hidden type="file" class="form-control" id="mainImage" name="mainImage">
-                                <label for="image" class="btn btn-secondary">Logo de la Banda</label>
-                                <input hidden type="file" class="form-control" id="image" name="image">
-                            </div>
-                            <div class="col-md-12 mb-3 d-flex justify-content-evenly">
-                                <button type="submit" class="btn btn-primary" id="enviarForm">Añadir banda</button>
-                            </div>
-                        </form>
+                            </select>
+                            <% if (locals.errors && errors.categoryId) { %>
+                                <span class="add-form__error"><%= errors.categoryId.msg %></span>
+                            <% } %>
+                        </div>
+
+                        <div class="add-form__field">
+                            <label class="add-form__label" for="phrase">Frase icónica</label>
+                            <input
+                                type="text"
+                                class="add-form__input <%= locals.errors && errors.phrase ? 'is-invalid' : '' %>"
+                                id="phrase"
+                                name="phrase"
+                                placeholder="Ej: Rock and Roll will never die"
+                                value="<%= locals.old && old.phrase ? old.phrase : '' %>"
+                            >
+                            <% if (locals.errors && errors.phrase) { %>
+                                <span class="add-form__error"><%= errors.phrase.msg %></span>
+                            <% } %>
+                        </div>
+
                     </div>
                 </div>
-            </main>
 
+                <!-- ── SECCIÓN: HISTORIA ── -->
+                <div class="add-form__section">
+                    <h2 class="add-form__section-title">
+                        <span class="add-form__section-num">02</span> Historia
+                    </h2>
 
-            <script>
-    function validarBanda() {
-    var name = document.getElementById('name').value;
-    var categoryId = document.getElementById('categoryId').value;
-    var phrase = document.getElementById('phrase').value;
-    var dateFounded = document.getElementById('dateFounded').value;
-    var dateEnded = document.getElementById('dateEnded').value;
-    var vigenteCheckbox = document.getElementById('vigente');
-    var totalShows = document.getElementById('totalShows').value;
-    var nextShows = document.getElementById('nextShows').value;
-    var history = document.getElementById('history').value;
-    var resume = document.getElementById('resume').value;
+                    <div class="add-form__grid">
 
-    switch (true) {
-        case (name === "" || categoryId === "" || phrase === "" || dateFounded === "" || (dateEnded === "" && !vigenteCheckbox.checked) || totalShows === "" || nextShows === "" || history === "" || resume === ""):
-            alert("Debes completar todos los campos del formulario.");
-            return false;
+                        <div class="add-form__field">
+                            <label class="add-form__label" for="history">Historia completa</label>
+                            <textarea
+                                class="add-form__input add-form__textarea <%= locals.errors && errors.history ? 'is-invalid' : '' %>"
+                                id="history"
+                                name="history"
+                                rows="4"
+                                placeholder="Contá los orígenes, formación y trayectoria..."
+                            ><%= locals.old && old.history ? old.history : '' %></textarea>
+                            <% if (locals.errors && errors.history) { %>
+                                <span class="add-form__error"><%= errors.history.msg %></span>
+                            <% } %>
+                        </div>
 
-        case isNaN(dateFounded) || isNaN(dateEnded) || isNaN(totalShows):
-            alert("Los campos de fecha de inicio, fecha de finalizacion, y total de conciertos deben ser numeros validos.");
-            return false;
+                        <div class="add-form__field">
+                            <label class="add-form__label" for="resume">Resumen breve</label>
+                            <textarea
+                                class="add-form__input add-form__textarea <%= locals.errors && errors.resume ? 'is-invalid' : '' %>"
+                                id="resume"
+                                name="resume"
+                                rows="4"
+                                placeholder="Descripción corta para la card del catálogo..."
+                            ><%= locals.old && old.resume ? old.resume : '' %></textarea>
+                            <% if (locals.errors && errors.resume) { %>
+                                <span class="add-form__error"><%= errors.resume.msg %></span>
+                            <% } %>
+                        </div>
 
-        case dateFounded.length !== 4 || dateEnded.length !== 4:
-            alert("Los campos de fecha deben tener 4 dígitos.");
-            return false;
+                    </div>
+                </div>
 
-        case (dateEnded <= dateFounded && !vigenteCheckbox.checked):
-            alert("La fecha de finalizacion debe ser posterior a la fecha de inicio.");
-            return false;
+                <!-- ── SECCIÓN: ACTIVIDAD ── -->
+                <div class="add-form__section">
+                    <h2 class="add-form__section-title">
+                        <span class="add-form__section-num">03</span> Actividad
+                    </h2>
 
-        case isNaN(nextShows) || new Date(nextShows) < new Date():
-            alert("La fecha del proximo concierto debe ser una fecha futura.");
-            return false;
+                    <div class="add-form__grid">
 
-        case totalShows < 0:
-            alert("El total de conciertos no puede ser negativo.");
-            return false;
+                        <div class="add-form__field">
+                            <label class="add-form__label" for="dateFounded">Año de fundación</label>
+                            <input
+                                type="number"
+                                class="add-form__input <%= locals.errors && errors.dateFounded ? 'is-invalid' : '' %>"
+                                id="dateFounded"
+                                name="dateFounded"
+                                placeholder="Ej: 1968"
+                                value="<%= locals.old && old.dateFounded ? old.dateFounded : '' %>"
+                            >
+                            <% if (locals.errors && errors.dateFounded) { %>
+                                <span class="add-form__error"><%= errors.dateFounded.msg %></span>
+                            <% } %>
+                        </div>
 
-        default:
-            return true;
-    }
-}
+                        <div class="add-form__field">
+                            <label class="add-form__label" for="dateEnded">Año de disolución</label>
+                            <input
+                                type="number"
+                                class="add-form__input"
+                                id="dateEnded"
+                                name="dateEnded"
+                                placeholder="Dejá vacío si sigue activa"
+                                value="<%= locals.old && old.dateEnded ? old.dateEnded : '' %>"
+                            >
+                            <% if (locals.errors && errors.dateEnded) { %>
+                                <span class="add-form__error"><%= errors.dateEnded.msg %></span>
+                            <% } %>
+                        </div>
 
-                function toggleFechaFinalizacion() {
-                    const fechaFinalizacion = document.getElementById("fechaFinalizacion");
-                    const vigenteCheckbox = document.getElementById("vigente");
+                        <div class="add-form__field add-form__field--wide add-form__field--checkbox-row">
+                            <label class="add-form__checkbox-label" for="vigente">
+                                <input
+                                    type="checkbox"
+                                    class="add-form__checkbox"
+                                    id="vigente"
+                                    name="vigente"
+                                    onclick="toggleFechaFinalizacion()"
+                                >
+                                <span class="add-form__checkbox-text">Banda vigente (sigue activa)</span>
+                            </label>
+                        </div>
 
-                    if (vigenteCheckbox.checked) {
-                        fechaFinalizacion.disabled = true;
-                    } else {
-                        fechaFinalizacion.disabled = false;
-                    }
-                }
-            </script>
+                        <div class="add-form__field">
+                            <label class="add-form__label" for="totalShows">Total de conciertos</label>
+                            <input
+                                type="number"
+                                class="add-form__input <%= locals.errors && errors.totalShows ? 'is-invalid' : '' %>"
+                                id="totalShows"
+                                name="totalShows"
+                                placeholder="Ej: 350"
+                                value="<%= locals.old && old.totalShows ? old.totalShows : '' %>"
+                            >
+                            <% if (locals.errors && errors.totalShows) { %>
+                                <span class="add-form__error"><%= errors.totalShows.msg %></span>
+                            <% } %>
+                        </div>
 
-            <%- include('../partials/footer') %>
+                        <div class="add-form__field">
+                            <label class="add-form__label" for="nextShows">Próximo concierto</label>
+                            <input
+                                type="date"
+                                class="add-form__input <%= locals.errors && errors.nextShows ? 'is-invalid' : '' %>"
+                                id="nextShows"
+                                name="nextShows"
+                                value="<%= locals.old && old.nextShows ? old.nextShows : '' %>"
+                            >
+                            <% if (locals.errors && errors.nextShows) { %>
+                                <span class="add-form__error"><%= errors.nextShows.msg %></span>
+                            <% } %>
+                        </div>
 
-            <script src="/javascripts/addBandFrontendValidations.js"></script>
+                    </div>
+                </div>
 
-    </body>
+                <!-- ── SECCIÓN: IMÁGENES ── -->
+                <div class="add-form__section">
+                    <h2 class="add-form__section-title">
+                        <span class="add-form__section-num">04</span> Imágenes
+                    </h2>
 
+                    <div class="add-form__grid">
+
+                        <div class="add-form__field">
+                            <label class="add-form__label">Portada de la banda</label>
+                            <label for="mainImage" class="add-form__file-btn">
+                                <i class="fa-solid fa-image"></i>
+                                <span id="mainImage-label">Seleccionar archivo</span>
+                            </label>
+                            <input
+                                hidden
+                                type="file"
+                                id="mainImage"
+                                name="mainImage"
+                                accept="image/*"
+                                onchange="updateFileName('mainImage', 'mainImage-label')"
+                            >
+                            <p class="add-form__file-hint">JPG o PNG · Se usa como banner del artista</p>
+                        </div>
+
+                        <div class="add-form__field">
+                            <label class="add-form__label">Logo de la banda</label>
+                            <label for="image" class="add-form__file-btn">
+                                <i class="fa-solid fa-circle-half-stroke"></i>
+                                <span id="image-label">Seleccionar archivo</span>
+                            </label>
+                            <input
+                                hidden
+                                type="file"
+                                id="image"
+                                name="image"
+                                accept="image/*"
+                                onchange="updateFileName('image', 'image-label')"
+                            >
+                            <p class="add-form__file-hint">PNG con fondo transparente recomendado</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ── ACCIÓN ── -->
+                <div class="add-form__actions">
+                    <a href="/users/admin" class="add-form__btn-cancel">Cancelar</a>
+                    <button type="submit" class="add-form__btn-submit" id="enviarForm">
+                        <i class="fa-solid fa-plus"></i> Agregar banda
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+
+    <script src="/javascripts/addBandFrontendValidations.js"></script>
+    <script>
+        function validarBanda() {
+            var name = document.getElementById('name').value;
+            var categoryId = document.getElementById('categoryId').value;
+            var phrase = document.getElementById('phrase').value;
+            var dateFounded = document.getElementById('dateFounded').value;
+            var dateEnded = document.getElementById('dateEnded').value;
+            var vigenteCheckbox = document.getElementById('vigente');
+            var totalShows = document.getElementById('totalShows').value;
+            var nextShows = document.getElementById('nextShows').value;
+            var history = document.getElementById('history').value;
+            var resume = document.getElementById('resume').value;
+
+            switch (true) {
+                case (name === "" || categoryId === "" || phrase === "" || dateFounded === "" || (dateEnded === "" && !vigenteCheckbox.checked) || totalShows === "" || nextShows === "" || history === "" || resume === ""):
+                    alert("Debes completar todos los campos del formulario.");
+                    return false;
+                case isNaN(dateFounded) || isNaN(dateEnded) || isNaN(totalShows):
+                    alert("Los campos de fecha de inicio, fecha de finalización, y total de conciertos deben ser números válidos.");
+                    return false;
+                case dateFounded.length !== 4 || dateEnded.length !== 4:
+                    alert("Los campos de fecha deben tener 4 dígitos.");
+                    return false;
+                case (dateEnded <= dateFounded && !vigenteCheckbox.checked):
+                    alert("La fecha de finalización debe ser posterior a la fecha de inicio.");
+                    return false;
+                case isNaN(nextShows) || new Date(nextShows) < new Date():
+                    alert("La fecha del próximo concierto debe ser una fecha futura.");
+                    return false;
+                case totalShows < 0:
+                    alert("El total de conciertos no puede ser negativo.");
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        function toggleFechaFinalizacion() {
+            const dateEnded = document.getElementById("dateEnded");
+            const vigenteCheckbox = document.getElementById("vigente");
+            dateEnded.disabled = vigenteCheckbox.checked;
+            if (vigenteCheckbox.checked) {
+                dateEnded.value = "";
+                dateEnded.placeholder = "No aplica — banda vigente";
+            } else {
+                dateEnded.placeholder = "Dejá vacío si sigue activa";
+            }
+        }
+
+        function updateFileName(inputId, labelId) {
+            const input = document.getElementById(inputId);
+            const label = document.getElementById(labelId);
+            if (input.files && input.files[0]) {
+                label.textContent = input.files[0].name;
+            }
+        }
+    </script>
+
+</body>
 </html>

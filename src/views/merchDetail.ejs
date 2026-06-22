@@ -1,60 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-    <%- include('partials/head',{ title : 'Detalle de Artista' }) %>
+<html lang="es">
+<%- include('partials/head', { title: 'Detalle de Producto - ' + merch.name }) %>
 
-<body class="home__body">
-
+    <body class="products__body">
         <%- include('partials/header') %>
 
+            <div class="merch-detail__page-wrapper">
+                <main class="merch-detail__container container">
 
-            <section class="section__white">
-                <h2 class="m-5">Aquí podrás ver toda la información del artículo <b>
-                        <%= merch.name %>
-                    </b></h2>
-                <div class="container m-5">
-                    <div class="row justify-content-center g-2 align-items-center">
-                        <div class="col-8 col-md-6 mx-auto p-5">
-                            <div class="card">
-                                <img src="/images/merch/<%= merch.image %>" class="card-img-top" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <%= merch.name %>
-                                    </h5>
+                    <div class="merch-detail__back-nav">
+                        <a href="/products/artists/detail/<%= merch.bandId %>" class="back-nav__link">
+                            <i class="fa-solid fa-arrow-left"></i> Volver a la banda
+                        </a>
+                    </div>
+
+                    <div class="merch-detail__main-grid">
+
+                        <section class="merch-detail__media-column">
+                            <div class="merch-detail__image-wrapper">
+                                <img src="/images/merch/<%= merch.image %>" class="merch-detail__product-img"
+                                    alt="<%= merch.name %>">
+                            </div>
+                        </section>
+                        <section class="merch-detail__info-column">
+                            <span class="merch-detail__badge">Merchandising Oficial</span>
+                            <h1 class="merch-detail__main-title">
+                                <%= merch.name %>
+                            </h1>
+
+                            <div class="merch-detail__tech-specs">
+                                <div class="spec__item">
+                                    <span class="spec__label">Disponibilidad:</span>
+                                    <span class="spec__value stock-instock">Stock Disponible</span>
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><b>PRECIO:</b> us$ <%= merch.price %>
-                                    </li>
-                                </ul>
-                                <div class="card-body text-center">
-                                    <a href="" class="btn btn-dark">Añadir al carrito</a>
+                                <div class="spec__item">
+                                    <span class="spec__label">Calidad:</span>
+                                    <span class="spec__value">Premium Edition</span>
                                 </div>
                             </div>
-                        </div>
-                       
-                        <div class="col-8 col-md-6 text-center">
-                            <h4><b>Descripción: </b></h4>
-                            <p>
-                                <%= merch.description %>
-                            </p>
-                        </div>
-                        <div class="col-8 col-md-6">
-                            <button class="btn btn-dark"><a class="text-white"
-                                    href="/products/artists/detail/<%= merch.bandId %>"> Volver al apartado de la banda</a></button>
-                        </div>
+
+                            <div class="merch-detail__purchase-box">
+                                <div class="purchase__price-tag">
+                                    <span class="price__currency">USD</span>
+                                    <span class="price__amount">$<%= merch.price %></span>
+                                </div>
+                                <a href="#" class="merch-detail__cart-btn">
+                                    <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+                                </a>
+                            </div>
+
+                            <div class="merch-detail__description-box">
+                                <h3 class="detail__sub-title">Detalles del artículo</h3>
+                                <p class="detail__body-text">
+                                    <%= merch.description %>
+                                </p>
+                            </div>
+                        </section>
+
                     </div>
-                </div>
+                </main>
+            </div>
 
-
-            </section>
-
-
-
-
-
-            <!-- Pie de página -->
             <%- include('partials/footer') %>
-
-
-</body>
+    </body>
 
 </html>

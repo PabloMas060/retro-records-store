@@ -1,51 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-    <%- include('partials/head',{ title : 'ARTISTAS' }) %>
+<html lang="es">
+<%- include('partials/head', { title: 'Nuestras Bandas' }) %>
 
-<body class="home__body">
+<body class="products__body">
+    <%- include('partials/header') %>
 
-        <%- include('partials/header') %>
+    <header class="products__hero-clean">
+        <div class="container">
+            <h1 class="products__title">Catálogo de Artistas</h1>
+            <p class="products__subtitle">Explorá la historia y el legado discográfico de las mayores leyendas del rock.</p>
+        </div>
+    </header>
 
-            <div class="home__bienvenida">
-                <img class="img-fluid" src="/banner-rhcp.gif" alt="">
-            </div>
-
-            <section class="section__black-bg">
-                <div class="container">
-                    <div class="row justify-content-evenly align-items-center">
-
-                        <% bands.forEach(band=> { %>
-                            <div class="col-10 col-md-4 w-25 m-3" data-aos="zoom-in-down">
-                                <div class="card card-bands">
-                                    <div class="card-header">
-                                        <a href="/products/artists/detail/<%= band.id %>"> <img class="img-fluid" src="/images/bands/<%= band.image %>" alt="" style="box-shadow: -5px -1px 12px 2px black; border-radius: 3px;"></a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h3>
-                                            <%= band.name %>
-                                        </h3>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a class="btn btn-secondary" style="box-shadow: 1px 1px 15px 5px black;" href="/products/artists/detail/<%= band.id %>">VER
-                                            DETALLES</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <% }) %>
-
-                             
+    <main class="container products__main-grid">
+        <section class="artists__grid">
+            <% bands.forEach(({ id, name, mainImage }) => { %>
+                <a href="/products/artists/detail/<%= id %>" class="artist__premium-card">
+                    <div class="artist__card-media">
+                        <img src="/images/bands/<%= mainImage %>" alt="<%= name %>" class="artist__card-img">
                     </div>
-                </div>
-            </section>
+                    <div class="artist__card-content">
+                        <h3 class="artist__card-name"><%= name %></h3>
+                    </div>
+                </a>
+            <% }) %>
+        </section>
+    </main>
 
-            <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-            <script>
-                AOS.init();
-              </script>
+    <%- include('partials/footer') %>
 </body>
-<!-- Pie de página -->
-<%- include('partials/footer') %>
-
-
-
 </html>

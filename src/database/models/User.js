@@ -4,25 +4,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.belongsTo(models.Head, {
-        as: 'head',
-        foreignKey: 'headId'
-      });
-
-      User.belongsTo(models.Face, {
-        as: 'face',
-        foreignKey: 'faceId'
-      });
-
-      User.belongsTo(models.Bust, {
-        as: 'bust',
-        foreignKey: 'bustId'
-      });
-
-      User.belongsTo(models.Hat, {
-        as: 'hat',
-        foreignKey: 'hatId'
-      });
 
       User.belongsTo(models.Rol, {
         as: 'rol',

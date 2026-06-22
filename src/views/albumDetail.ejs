@@ -1,74 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
-    <%- include('partials/head',{ title : 'Detalle de Artista' }) %>
-<body class="home__body">
+<html lang="es">
+<%- include('partials/head', { title: 'Detalle de Álbum - ' + album.title }) %>
 
-    
-        <%- include('partials/header') %>
+<body class="products__body">
+    <%- include('partials/header') %>
 
-           
-            <section class="section__white">
-<h2 class="m-5">Aquí podrás ver toda la información del álbum <b><%= album.title %></b></h2>
-                <div class="container">
-                    <div class="row justify-content-center g-2">
-                        <div class="col-8 col-md-6 mx-auto p-5">
-                            <div class="card" style="box-shadow: 1px 5px 25px 10px black;">
-                                <img src="/images/albums/<%= album.image %>" class="card-img-top" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= album.title %></h5>
-                                    <p class="card-text"><%= album.year %></p>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Género: <% genres.forEach(genre => { %>
-                                     <% if (genre.id === album.genreId) { %>
-                                      <%= genre.name %>
-                                     <% } %>
-                                    <% }) %></li>
-                                    <li class="list-group-item"><b>PRECIO:</b> us$ <%= album.price %></li>
-                                </ul>
-                                <div class="card-body text-center">
-                                    <button data-id="<%= album.id %>" id="btn-addCart" class="btn btn-dark">Agregar al carrito</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-8 col-md-4 text-center mt-5">
-                            <h4>Lista de canciones:</h4>
-                            <ol class="align-items-center text-start">
+    <div class="album-detail__page-wrapper">
+        <main class="album-detail__container container">
+            
+            <div class="album-detail__back-nav">
+                <a href="/products/artists/detail/<%= album.bandId %>" class="back-nav__link">
+                    <i class="fa-solid fa-arrow-left"></i> Volver a la banda
+                </a>
+            </div>
 
-                                <% tracks.forEach(({id,name},index) => { %>
-                                    <li class="mt-3"><p style="text-shadow: 1px 1px 1px black"><%= index+1 %>. <%= name %></p></li>
-                                <% }) %>
-                            </ol>
-                        </div>
-                        <div class="col-8 col-md-6 text-center">
-                            <p><b>Reseña del álbum:</b></p>
-                            <p><%= album.description %></p>
+            <div class="album-detail__main-grid">
                 
-                           <!--  <ul>
-                                <li><b>Voz principal: </b> Anthony Kiedis</li>
-                                <li><b>Guitarra y coros: </b> John Frusciante</li>
-                                <li><b>Bajo: </b> Flea</li>
-                                <li><b>Batería: </b> Chad Smith</li>
-                            </ul> -->
+                <section class="album-detail__media-column">
+                    <div class="album-detail__cover-wrapper">
+                        <img src="/images/albums/<%= album.image %>" class="album-detail__cover-img" alt="<%= album.title %>">
+                    </div>
+                </section>
+
+                <section class="album-detail__info-column">
+                    <span class="album-detail__meta-year"><%= album.year %> • Vinilo Oficial</span>
+                    <h1 class="album-detail__main-title"><%= album.title %></h1>
+                    
+                    <div class="album-detail__tech-specs">
+                        <div class="spec__item">
+                            <span class="spec__label">Género:</span>
+                            <span class="spec__value">
+                                <% genres.forEach(genre => { %>
+                                    <% if (genre.id === album.genreId) { %>
+                                        <%= genre.name %>
+                                    <% } %>
+                                <% }) %>
+                            </span>
                         </div>
-                        <div class="col-8 col-md-6">
-                            <button class="btn btn-dark"><a class="text-white" href="/products/artists/detail/<%= album.bandId %>"> Volver al listado de álbums</a></button>
+                        <div class="spec__item">
+                            <span class="spec__label">Formato:</span>
+                            <span class="spec__value">LP de Vinilo (180g)</span>
                         </div>
                     </div>
+
+                    <div class="album-detail__purchase-box">
+                        <div class="purchase__price-tag">
+                            <span class="price__currency">USD</span>
+                            <span class="price__amount">$<%= album.price %></span>
+                        </div>
+                        
+                        <form action="/api/cart/addProduct" method="POST">
+                            <input type="hidden" name="albumId" value="<%= album.id %>">
+                            <button type="submit" class="album-detail__cart-btn">
+                                <i class="fa-solid fa-bag-shopping"></i> Agregar al Carrito
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="album-detail__description-box">
+                        <h3 class="detail__sub-title">Reseña del Álbum</h3>
+                        <p class="detail__body-text"><%= album.description %></p>
+                    </div>
+                </section>
+
+            </div>
+
+            <footer class="album-detail__tracks-section">
+                <h3 class="detail__sub-title text-center"><i class="fa-solid fa-list-ol"></i> Lista de Canciones</h3>
+                <div class="album-detail__tracklist-wrapper">
+                    <ol class="album-detail__tracklist">
+                        <% tracks.forEach(({ id, name }, index) => { %>
+                            <li class="tracklist__item">
+                                <span class="track__number"><%= String(index + 1).padStart(2, '0') %></span>
+                                <span class="track__name"><%= name %></span>
+                                <span class="track__duration-placeholder"><i class="fa-solid fa-music"></i></span>
+                            </li>
+                        <% }) %>
+                    </ol>
                 </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <%- include('partials/footer') %>
 
 
-            </section>
-
-
-     
-
-
-            <!-- Pie de página -->
-            <%- include('partials/footer') %>
-            <script src="/javascripts/productDetail.js"></script>
-        
-
-</body>
-
+    </body>
+    <script>
+    // Esto mostrará en la consola si tus variables tienen contenido
+    console.log("DEBUG FLASH:", {
+        success: '<%= typeof successMessage !== "undefined" ? successMessage : "NO DEFINIDO" %>',
+        error: '<%= typeof errorMessage !== "undefined" ? errorMessage : "NO DEFINIDO" %>'
+    });
+</script>
 </html>

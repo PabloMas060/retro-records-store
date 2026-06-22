@@ -1,50 +1,66 @@
 <!DOCTYPE html>
 <html>
 <%- include('../partials/head',{ title : 'CARRITO' }) %>
-
-  <body>
+<body>
     <%- include('../partials/header') %>
+<main class="container-cart-box">
+    <h2>Música en tu carrito</h2>
 
-
-
-      <main class="col-12">
-        <div class="col-10">
-          <h2> Música en tu carrito </h2>
-        </div>
-
-        <div class="container-cart-box">
-          <div id="cartContainer" class="container" style="border: solid 1px black;border-radius: 8px;">
-            <!-- templete -->
-            
-            <!-- templete -->
-          </div>
-
-          <div class="card col-4 my-5 position-sticky" id="card-comprar-cart">
-            <div class="card-body my-2 d-flex flex-column gap-2">
-              <button class="btn w-100 btn-danger" id="clear-cart">Vaciar Carrito</button>
-              <button class="btn w-100 btn-success" id="btn-buy">Comprar</button>
-              <a href="/products/artists" class="btn w-100 btn-dark">Seguir mirando</a>
-              <div class="text-end fs-3">
-                <span>
-                  Total:
-                </span>
-                <output id="output-total">
-                  0
-                </output>
-              </div>
+    <% if (order && order.cart && order.cart.length > 0) { %>
+        <% order.cart.forEach(product => { %>
+            <div class="cart-item">
+                <img src="/images/albums/<%= product.image %>" alt="<%= product.title %>">
+                <div class="item-details">
+                    <h5><%= product.title %></h5>
+                    <p>Precio: <strong>$<%= product.price %></strong></p>
+                    <p>Cantidad: <%= product.Cart.quantity %></p>
+                </div>
+                <form action="/api/cart/removeProduct" method="POST">
+                    <input type="hidden" name="albumId" value="<%= product.id %>">
+                    <button type="submit" class="btn-remove">Eliminar</button>
+                </form>
             </div>
-          </div>
-
+        <% }) %>
+        
+        <div class="cart-summary">
+            <div class="total-price">Total: $<%= order.total %></div>
+            <div class="d-flex gap-2 justify-content-end">
+                <form action="/api/cart/clearCart" method="POST">
+                    <button class="btn btn-outline-light">Vaciar Carrito</button>
+                </form>
+                <form action="/api/cart/statusOrder" method="POST">
+                    <input type="hidden" name="status" value="completed">
+                    <button class="btn btn-success">Finalizar Compra</button>
+                </form>
+            </div>
         </div>
+    <% } else { %>
+        <div class="text-center p-5">
+            <h3>Tu carrito está vacío</h3>
+            <a href="/products/artists" class="btn btn-primary mt-3">Ir a la tienda</a>
+        </div>
+    <% } %>
+</main>
+    <%- include('../partials/footer') %>
 
-
-      </main>
-
-      <%- include('../partials/footer') %>
-        <script src="/javascripts/cart.js"></script>
-
-
-
-  </body>
-
+<% if (successMessage && successMessage.length > 0) { %>
+    <script>
+        console.log("El mensaje es:", "<%= successMessage[0] %>"); // Ver consola
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: "<%= successMessage[0] %>",
+            timer: 2000,
+            showConfirmButton: false
+        });
+    </script>
+<% } %>
+</body>
+   <script>
+    // Esto mostrará en la consola si tus variables tienen contenido
+    console.log("DEBUG FLASH:", {
+        success: '<%= typeof successMessage !== "undefined" ? successMessage : "NO DEFINIDO" %>',
+        error: '<%= typeof errorMessage !== "undefined" ? errorMessage : "NO DEFINIDO" %>'
+    });
+</script>
 </html>

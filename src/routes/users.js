@@ -11,15 +11,14 @@ const profileValidation = require('../validation/profileValidation');
 /* /users */
 
 router
-/* .get('/cart', cart) */
-.get("/register",checkUser, register)
-.post("/register",registerValidation, processRegister)
+.get("/register", checkUser, register)
+.post("/register", registerValidation, processRegister)
 .get("/login", checkUser, login)
-.post("/login",loginValidation, processLogin)
+.post("/login", loginValidation, processLogin)
 .get('/profile', checkUserLogin, profile)
 .get('/edit-profile/:id', checkUserLogin, profileEdit)
-.put('/edit-profile/:id', profileValidation, profileUpdate)
-.get('/admin',checkAdmin, admin)
+.put('/edit-profile/:id', uploads.single('image'), profileValidation, profileUpdate)
+.get('/admin', checkAdmin, admin)
 .get("/logout", logout)
 
 

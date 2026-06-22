@@ -1,10 +1,77 @@
-#cart-check {
-    display: none;
+/* Contenedor principal */
+.container-cart-box {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
-.container-cart-box{
+
+/* Tarjeta de producto */
+.cart-item {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-around;
+    background: #1a1a1a;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    border: 1px solid #333;
+    transition: transform 0.2s;
+}
+
+.cart-item:hover {
+    border-color: #e63946;
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 1.5rem;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-details h5 {
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.item-details p {
+    color: #aaa;
+    margin: 0.2rem 0;
+}
+
+/* Botón eliminar */
+.btn-remove {
+    background: transparent;
+    border: 1px solid #e63946;
+    color: #e63946;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-remove:hover {
+    background: #e63946;
+    color: white;
+}
+
+/* Panel de totales y acciones */
+.cart-summary {
+    background: #121212;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: right;
+    margin-top: 2rem;
+    border: 1px solid #333;
+}
+
+.total-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 1rem;
 }

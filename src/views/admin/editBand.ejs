@@ -6,122 +6,360 @@
     <body>
         <%- include('../partials/header') %>
 
-            <main class="container">
-                <div class="row">
-                    <div class="col-12 mt-4 text-start">
-                        <a class="btn btn-dark" style="cursor: pointer;" href="/users/admin">Volver al panel de administración</a>
-                    </div>
-                    <div class="col-12 mb-4 mt-4 text-center">
-                        <h3>Estás editando: <b><%= band.name %></b></h3>
-                    </div>
-                    <div class="col-md-8 mx-auto">
-                        <form id="editBandForm" action="/products/edit/band/<%= band.id %>?_method=PUT" method="POST"
-                            enctype="multipart/form-data">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nombre de la Banda</label>
-                                <input type="text"
-                                    class="form-control <%= locals.errors && (errors.name && 'is-invalid') %>" id="name"
-                                    name="name" value="<%= band.name %>">
-                                <small id="msgError-name" class="ms-2 text-danger">
-                                    <%= locals.errors && (errors.name && errors.name.msg) %>
-                                </small>
-                            </div>
+            <main class="add-form__page-wrapper">
 
-                            <div class="mb-3">
-                                <label for="categoryId" class="form-label">Categoría</label>
-                                <select class="form-select" aria-label="Default select example" name="categoryId"
-                                    id="categoryId">
-                                    <% categories.forEach(category=> { %>
-                                        <option <%=category.id===band.categoryId ? 'selected' : '' %> value="<%=
-                                                category.id %>"><%= category.name %>
-                                        </option>
-                                        <% }) %>
-                                </select>
+    <div class="add-form__container">
 
-                            </div>
-                            <div class="mb-3">
-                                <label for="phrase" class="form-label">Frase</label>
-                                <input type="text"
-                                    class="form-control <%= locals.errors && (errors.phrase && 'is-invalid') %>"
-                                    id="phrase" name="phrase" value="<%= band.phrase %>">
-                                <small id="msgError-phrase" class="ms-2 text-danger">
-                                    <%= locals.errors && (errors.phrase && errors.phrase.msg) %>
-                                </small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="dateFounded" class="form-label">Año de fundación</label>
-                                <input type="number"
-                                    class="form-control <%= locals.errors && (errors.dateFounded && 'is-invalid') %>"
-                                    id="dateFounded" name="dateFounded" value="<%= band.dateFounded %>">
-                                <small id="msgError-dateFounded" class="ms-2 text-danger">
-                                    <%= locals.errors && (errors.dateFounded && errors.dateFounded.msg) %>
-                                </small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="dateEnded" class="form-label">Año de finalización</label>
-                                <input type="number" class="form-control" id="dateEnded" name="dateEnded"
-                                    value="<%= band.dateEnded ? band.dateEnded : 0 %>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="vigente" class="form-label">Banda Vigente</label>
-                                <input type="checkbox" id="vigente" name="vigente" <% if (!band.dateEnded) { %>checked<%
-                                    } %> onclick="toggleFechaFinalizacion()">
-                            </div>
-                            <div class="mb-3">
-                                <label for="totalShows" class="form-label">Total de Conciertos</label>
-                                <input type="number"
-                                    class="form-control <%= locals.errors && (errors.totalShows && 'is-invalid') %>"
-                                    id="totalShows" name="totalShows" value="<%= band.totalShows %>">
-                                <small id="msgError-totalShows" class="ms-2 text-danger">
-                                    <%= locals.errors && (errors.totalShows && errors.totalShows.msg) %>
-                                </small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nextShows" class="form-label">Próximo Concierto</label>
-                                <input type="date"
-                                    class="form-control <%= locals.errors && (errors.nextShows && 'is-invalid') %>"
-                                    id="nextShows" name="nextShows" value="<%= band.nextShows %>">
-                                <small id="msgError-nextShows" class="ms-2 text-danger">
-                                    <%= locals.errors && (errors.nextShows && errors.nextShows.msg) %>
-                                </small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="history" class="form-label">Historia</label>
-                                <textarea class="form-control <%= locals.errors && (errors.history && 'is-invalid') %>"
-                                    id="history" name="history" rows="3"><%= band.history %></textarea>
-                                <small id="msgError-history" class="ms-2 text-danger">
-                                    <%= locals.errors && (errors.history && errors.history.msg) %>
-                                </small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="resume" class="form-label">Resumen</label>
-                                <textarea class="form-control <%= locals.errors && (errors.resume && 'is-invalid') %>"
-                                    id="resume" name="resume" rows="3"><%= band.resume %></textarea>
-                                <small id="msgError-resume" class="ms-2 text-danger">
-                                    <%= locals.errors && (errors.resume && errors.resume.msg) %>
-                                </small>
-                            </div>
-                            <div class="mb-6">
-                                <div class="d-flex flex-column gap-2"><label style="cursor: pointer;">
-                                        <img src="/images/bands/<%= band.image %>" width="100px" alt=""></label>
-                                </div>
-                                <div class="d-flex flex-column gap-2"><label style="cursor: pointer;">
-                                        <img src="/images/bands/<%= band.mainImage %>" width="100px" alt=""></label>
-                                </div>
-                                <label for="mainImage" class="btn btn-secondary">Cambiar imagen de la Banda</label>
-                                <input hidden type="file" class="form-control" id="mainImage" name="mainImage">
-                                <label for="image" class="btn btn-secondary">Cambiar Logo de la Banda</label>
-                                <input hidden type="file" class="form-control" id="image" name="image">
-                            </div>
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-success">Actualizar</button>
-                            </div>
-                            <small id="msgError-empty" class="ms-2 text-danger"></small>
-                        </form>
+        <!-- BACK -->
+
+        <nav class="add-form__back-nav">
+            <a href="/users/admin" class="back-nav__link">
+                <i class="fa-solid fa-arrow-left"></i>
+                Volver al panel de administración
+            </a>
+        </nav>
+
+        <!-- HEADER -->
+
+        <div class="add-form__header">
+
+            <div class="add-form__header-icon">
+                <i class="fa-solid fa-pen"></i>
+            </div>
+
+            <div class="add-form__header-content">
+
+                <span class="add-form__eyebrow">
+                    ADMINISTRACIÓN
+                </span>
+
+                <h1 class="add-form__title">
+                    Editar Banda
+                </h1>
+
+                <p class="add-form__subtitle">
+                    Estás editando:
+                    <strong><%= band.name %></strong>
+                </p>
+
+            </div>
+
+        </div>
+
+        <form
+            id="editBandForm"
+            class="add-form__card"
+            action="/products/edit/band/<%= band.id %>?_method=PUT"
+            method="POST"
+            enctype="multipart/form-data">
+
+            <!-- IDENTIDAD -->
+
+            <section class="add-form__section">
+
+                <h2 class="add-form__section-title">
+                    <span class="add-form__section-num">01</span>
+                    Identidad
+                </h2>
+
+                <div class="add-form__grid">
+
+                    <div class="add-form__field add-form__field--wide">
+                        <label class="add-form__label" for="name">
+                            Nombre de la Banda
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="add-form__input <%= locals.errors && (errors.name && 'is-invalid') %>"
+                            value="<%= band.name %>">
+
+                        <small class="add-form__error">
+                            <%= locals.errors && (errors.name && errors.name.msg) %>
+                        </small>
                     </div>
+
+                    <div class="add-form__field">
+                        <label class="add-form__label" for="categoryId">
+                            Categoría
+                        </label>
+
+                        <select
+                            id="categoryId"
+                            name="categoryId"
+                            class="add-form__input add-form__select">
+
+                            <% categories.forEach(category=> { %>
+
+                                <option
+                                    <%= category.id===band.categoryId ? 'selected' : '' %>
+                                    value="<%= category.id %>">
+
+                                    <%= category.name %>
+
+                                </option>
+
+                            <% }) %>
+
+                        </select>
+                    </div>
+
+                    <div class="add-form__field">
+                        <label class="add-form__label" for="phrase">
+                            Frase
+                        </label>
+
+                        <input
+                            type="text"
+                            id="phrase"
+                            name="phrase"
+                            class="add-form__input <%= locals.errors && (errors.phrase && 'is-invalid') %>"
+                            value="<%= band.phrase %>">
+
+                        <small class="add-form__error">
+                            <%= locals.errors && (errors.phrase && errors.phrase.msg) %>
+                        </small>
+                    </div>
+
                 </div>
-            </main>
 
+            </section>
+
+            <!-- HISTORIA -->
+
+            <section class="add-form__section">
+
+                <h2 class="add-form__section-title">
+                    <span class="add-form__section-num">02</span>
+                    Historia
+                </h2>
+
+                <div class="add-form__grid">
+
+                    <div class="add-form__field">
+                        <label class="add-form__label" for="history">
+                            Historia
+                        </label>
+
+                        <textarea
+                            id="history"
+                            name="history"
+                            class="add-form__input add-form__textarea <%= locals.errors && (errors.history && 'is-invalid') %>"><%= band.history %></textarea>
+
+                        <small class="add-form__error">
+                            <%= locals.errors && (errors.history && errors.history.msg) %>
+                        </small>
+                    </div>
+
+                    <div class="add-form__field">
+                        <label class="add-form__label" for="resume">
+                            Resumen
+                        </label>
+
+                        <textarea
+                            id="resume"
+                            name="resume"
+                            class="add-form__input add-form__textarea <%= locals.errors && (errors.resume && 'is-invalid') %>"><%= band.resume %></textarea>
+
+                        <small class="add-form__error">
+                            <%= locals.errors && (errors.resume && errors.resume.msg) %>
+                        </small>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ACTIVIDAD -->
+
+            <section class="add-form__section">
+
+                <h2 class="add-form__section-title">
+                    <span class="add-form__section-num">03</span>
+                    Actividad
+                </h2>
+
+                <div class="add-form__grid">
+
+                    <div class="add-form__field">
+                        <label class="add-form__label" for="dateFounded">
+                            Año de fundación
+                        </label>
+
+                        <input
+                            type="number"
+                            id="dateFounded"
+                            name="dateFounded"
+                            class="add-form__input <%= locals.errors && (errors.dateFounded && 'is-invalid') %>"
+                            value="<%= band.dateFounded %>">
+
+                        <small class="add-form__error">
+                            <%= locals.errors && (errors.dateFounded && errors.dateFounded.msg) %>
+                        </small>
+                    </div>
+
+                    <div class="add-form__field">
+                        <label class="add-form__label" for="dateEnded">
+                            Año de finalización
+                        </label>
+
+                        <input
+                            type="number"
+                            id="dateEnded"
+                            name="dateEnded"
+                            class="add-form__input"
+                            value="<%= band.dateEnded ? band.dateEnded : 0 %>">
+                    </div>
+
+                    <div class="add-form__field">
+                        <label class="add-form__label" for="totalShows">
+                            Total de conciertos
+                        </label>
+
+                        <input
+                            type="number"
+                            id="totalShows"
+                            name="totalShows"
+                            class="add-form__input <%= locals.errors && (errors.totalShows && 'is-invalid') %>"
+                            value="<%= band.totalShows %>">
+
+                        <small class="add-form__error">
+                            <%= locals.errors && (errors.totalShows && errors.totalShows.msg) %>
+                        </small>
+                    </div>
+
+                    <div class="add-form__field">
+                        <label class="add-form__label" for="nextShows">
+                            Próximo concierto
+                        </label>
+
+                        <input
+                            type="date"
+                            id="nextShows"
+                            name="nextShows"
+                            class="add-form__input <%= locals.errors && (errors.nextShows && 'is-invalid') %>"
+                            value="<%= band.nextShows %>">
+
+                        <small class="add-form__error">
+                            <%= locals.errors && (errors.nextShows && errors.nextShows.msg) %>
+                        </small>
+                    </div>
+
+                    <div class="add-form__field add-form__field--checkbox-row add-form__field--wide">
+
+                        <label class="add-form__checkbox-label">
+
+                            <input
+                                type="checkbox"
+                                id="vigente"
+                                name="vigente"
+                                class="add-form__checkbox"
+                                <% if (!band.dateEnded) { %>checked<% } %>
+                                onclick="toggleFechaFinalizacion()">
+
+                            <span class="add-form__checkbox-text">
+                                Banda vigente
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- IMÁGENES -->
+
+            <section class="add-form__section">
+
+                <h2 class="add-form__section-title">
+                    <span class="add-form__section-num">04</span>
+                    Imágenes
+                </h2>
+
+                <div class="add-form__grid">
+
+                    <div class="add-form__field">
+
+                        <label class="add-form__label">
+                            Imagen actual
+                        </label>
+
+                        <img
+                            src="/images/bands/<%= band.mainImage %>"
+                            alt="<%= band.name %>"
+                            class="admin-preview-image">
+
+                        <label for="mainImage" class="add-form__file-btn">
+                            <i class="fa-solid fa-image"></i>
+                            Cambiar imagen principal
+                        </label>
+
+                        <input
+                            hidden
+                            type="file"
+                            id="mainImage"
+                            name="mainImage">
+
+                    </div>
+
+                    <div class="add-form__field">
+
+                        <label class="add-form__label">
+                            Logo actual
+                        </label>
+
+                        <img
+                            src="/images/bands/<%= band.image %>"
+                            alt="<%= band.name %>"
+                            class="admin-preview-image">
+
+                        <label for="image" class="add-form__file-btn">
+                            <i class="fa-solid fa-image"></i>
+                            Cambiar logo
+                        </label>
+
+                        <input
+                            hidden
+                            type="file"
+                            id="image"
+                            name="image">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ACCIONES -->
+
+            <div class="add-form__actions">
+
+                <a href="/users/admin" class="add-form__btn-cancel">
+                    Cancelar
+                </a>
+
+                <button
+                    type="submit"
+                    class="add-form__btn-submit">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Actualizar banda
+
+                </button>
+
+            </div>
+
+            <small id="msgError-empty" class="add-form__error"></small>
+
+        </form>
+
+    </div>
+
+</main>
 
             <script>
                 function toggleFechaFinalizacion() {

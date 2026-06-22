@@ -1,112 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
-<%- include('partials/head',{ title : 'Detalle de Artista' }) %>
+<html lang="es">
+<%- include('partials/head', { title: 'Detalle de Artista' }) %>
 
-    <body class="home__body">
+<body class="products__body">
+    <%- include('partials/header') %>
 
+    <div class="artist-detail__page-wrapper">
 
-        <%- include('partials/header') %>
-
-            <section class="section__black-artistDetail">
-                <h2>Esto es... 
-                </h2>
-                <div class="col-10 p-3 text-center align-items-center d-flex">
-                    <div class="col-7">
-                        <div class="col-12">
-                            <h3><%= band.name %></h3>
-                            <h5>"<%= band.phrase %>"</h5>
-                        </div>
-                        
-
-                         <div class="col-10 col-md-8 mt-5">
-                            <div class="row align-items-center justify-content-center g-3">
-                                <div class="col-12 col-md-5">
-                                    <h6 style="text-shadow: 2px 2px 2px black; font-family: Degular, sans-serif">
-                                        <%= band.dateFounded %> - <%= band.dateEnded ? band.dateEnded : 'Banda Vigente' %>
-                                    </h6>
-                                </div>
-                                <div class="col-12 col-md-7">
-                                    <h6 style="text-shadow: 2px 2px 2px black;font-family: Degular, sans-serif" >Conciertos realizados: <%= band.totalShows %>
-                                    </h6>
-                                </div>
-                                <!-- <div class="col-12 col-md-6">
-                                    <h6>Integrantes actuales</h6>
-                                </div> -->
-                                <div class="col-12 col-md-8">
-                                    <h6 style="text-shadow: 2px 2px 2px black;font-family: Degular, sans-serif">Próximo concierto: <%= band.nextShows %>
-                                    </h6>
-                                </div>
-                            </div>
-                            <div class="col-12 mt-2 p-5">
-                                <h5 style="text-shadow: 2px 2px 2px black;">Historia de la banda:</h5>
-                                <p>
-                                    <%= band.history %>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <img src="/images/bands/<%= band.image %>" alt="" class="img-fluid mb-3"
-                            style="border-radius: 18px; box-shadow: 1px 5px 25px 1px whitesmoke;">
-                    </div>
-                    
-
-                   
-
-                </div>
+        <header class="artist-detail__hero" style="background-image: linear-gradient(to bottom, rgba(7, 8, 10, 0.3) 20%, #07080a 100%), url('/images/bands/<%= band.image %>');">
+            <div class="artist-detail__hero-container">
+                <span class="artist-detail__badge-genre">Esto es...</span>
+                <h1 class="artist-detail__main-title"><%= band.name %></h1>
+                <% if (band.phrase) { %>
+                    <p class="artist-detail__quote">"<%= band.phrase %>"</p>
+                <% } %>
                 
-            </section>
-            <section class="partial-Section2">
-                <div class="partial-productDisplaySection">
-
-                    <% albums.forEach(({id,title,image,year,description,price, discount})=> { %>
-                        <div class="partial-productDisplay1" id="album<%= id %>">
-                            <a href="/products/albums/detail/<%= id %>"><img class="img-fluid"
-                                    src="/images/albums/<%= image %>" alt=""></a>
-                            <p><b>
-                                    <%= title %>
-                                </b></p>
-                            <small>
-                                <%= year %>
-                            </small>
-                        </div>
-                        <% }) %>
+                <div class="artist-detail__meta-grid">
+                    <div class="meta__badge">
+                        <i class="fa-solid fa-calendar-days"></i> 
+                        <span><%= band.dateFounded %> - <%= band.dateEnded ? band.dateEnded : 'Banda Vigente' %></span>
+                    </div>
+                    <div class="meta__badge">
+                        <i class="fa-solid fa-guitar"></i> 
+                        <span><%= band.totalShows %> Conciertos</span>
+                    </div>
+                    <div class="meta__badge">
+                        <i class="fa-solid fa-clock"></i> 
+                        <span>Próximo: <%= band.nextShows %></span>
+                    </div>
                 </div>
+            </div>
+        </header>
+
+        <main class="artist-detail__content container">
+            
+            <section class="artist-detail__bio-box">
+                <h2 class="section__premium-title">Historia de la banda</h2>
+                <p class="artist-detail__bio-text"><%= band.history %></p>
             </section>
 
+            <section class="artist-detail__section">
+                <h2 class="section__premium-title">Álbumes y Vinilos Disponibles</h2>
+                <p class="section__premium-subtitle">Legado Discográfico</p>
 
-            <section class="partial-Section1">
-                <div class="partial-productDisplaySection">
-
-                    <% merchs.forEach(({id, price,image})=> { %>
-                        <div class="partial-productDisplay1">
-                            <a href="/products/merchs/detail/<%= id %>"><img class="img-fluid"
-                                    src="/images/merch/<%= image %>" alt=""></a>
-                            <div class="fans-precio">$<%= price %>
+                <div class="products__premium-grid">
+                    <% albums.forEach(({ id, title, image, year }) => { %>
+                        <article class="product__premium-card" id="album<%= id %>">
+                            <div class="product__card-media">
+                                <img src="/images/albums/<%= image %>" alt="<%= title %>" class="product__card-img">
+                                <div class="product__card-overlay">
+                                    <a href="/products/albums/detail/<%= id %>" class="product__card-btn">
+                                        <i class="fa-solid fa-compact-disc"></i> Ver Vinilo
+                                    </a>
+                                </div>
                             </div>
-                            <div class="col-10 col-md-3 mt-5"></div>
-                            <% types.forEach(type=> { %>
-                                <% if (id===type.id) { %>
-                                    <div>
-                                        <h6>
-                                            <%= type.name %>
-                                        </h6>
-                                    </div>
-                                    <% } %>
-                                        <% }) %>
-
-                        </div>
-
-
-                        <% }) %>
-
+                            <div class="product__card-info">
+                                <h4 class="product__card-title"><%= title %></h4>
+                                <span class="product__card-meta"><%= year %></span>
+                            </div>
+                        </article>
+                    <% }) %>
                 </div>
             </section>
 
-            <!-- Pie de página -->
-            <%- include('partials/footer') %>
+            <section class="artist-detail__section">
+                <h2 class="section__premium-title">Merch Oficial</h2>
+                <p class="section__premium-subtitle">Indumentaria y Accesorios Exclusivos</p>
 
+                <div class="products__premium-grid">
+                    <% merchs.forEach(({ id, price, image }) => { %>
+                        <article class="product__premium-card">
+                            <div class="product__card-media merch-bg">
+                                <img src="/images/merch/<%= image %>" alt="Merch" class="product__card-img contain-img">
+                                <div class="product__card-overlay">
+                                    <a href="/products/merchs/detail/<%= id %>" class="product__card-btn">
+                                        <i class="fa-solid fa-shirt"></i> Ver Detalle
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="product__card-info">
+                                <% types.forEach(type => { %>
+                                    <% if (id === type.id) { %>
+                                        <h4 class="product__card-title"><%= type.name %></h4>
+                                    <% } %>
+                                <% }) %> <span class="product__card-price">$<%= price %></span>
+                            </div>
+                        </article>
+                    <% }) %>
+                </div>
+            </section>
 
-    </body>
-
+        </main>
+    </div> <%- include('partials/footer') %>
+</body>
 </html>

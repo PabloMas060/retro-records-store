@@ -5,22 +5,13 @@ const { index, about, contact, groups, notices, notice, fans, capsule, editProfi
 /* GET home page. */
 
 router.get('/', index);
-router.get('/about', about);
 router.get('/contact', contact);
-router.get('/groups', groups);
-router.get('/notices/:id', notices);
-router.get('/notice/:id', notice)
-router.get('/fans', fans);
-router.get('/capsule', capsule);
 router.get('/editProfile.ejs', editProfile);
 router.get('/selfcart', selfcart);
 router.get('/giftcart', giftcart);
 router.get('/cardInfo', cardInfo);
 router.get('/checkout', checkout);
-router.get('/prueba1', prueba1);
-router.get('/prueba2', prueba2);
-router.get('/prueba3', prueba3);
-router.get('/prueba4', prueba4);
+
 
 
 

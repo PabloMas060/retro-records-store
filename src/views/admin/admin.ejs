@@ -1,378 +1,745 @@
-<!DOCTYPE html>
-<html>
+<%- include('../partials/head',{ title : 'Panel de Administración' }) %>
 
-<%- include('../partials/head',{ title : 'ADMIN' }) %>
+    <body class="admin__body">
+        <%- include('../partials/head',{ title : 'Panel de Administración' }) %>
 
-    <body class="home__body">
-        <%- include('../partials/header') %>
+            <body class="admin__body">
+                <%- include('../partials/header') %>
 
+                    <% const categoryLabels={ 1: 'Ícono del rock' , 2: 'Orgullo nacional' , 3: 'Indie' , 4: 'Clásico' };
+                        const genreLabels={ 1: 'Rock' , 2: 'Pop' , 3: 'Indie' , 4: 'Metal' }; const typeLabels={
+                        1: 'Remera' , 2: 'Campera' , 3: 'Poster' , 4: 'Taza' , 5: 'Mochila' , 6: 'Sticker' , 7: 'Hoodie'
+                        , 8: 'Emblema' , 9: 'Púa' , 10: 'Merchandising General' , 11: 'Indumentaria General' ,
+                        12: 'Cápsula del tiempo' }; const totalShows=bands.reduce((acc, b)=> acc + (b.totalShows || 0),
+                        0);
+                        %>
 
+                        <div class="admin__page-wrapper">
+                            <div class="admin__layout">
 
-            <main class="container">
-                <div class="row mt-5">
-                    <h2 class="text-center">Bienvenido al panel de administración</h2>
+                                <!-- ============== SIDEBAR ============== -->
+                                <aside class="admin__sidebar">
+                                    <span class="admin__sidebar-label">Panel admin</span>
 
-                    <div class="col-12 col-md-10 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
-                                        data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
-                                        aria-selected="true">Bandas</button>
-                                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-                                        data-bs-target="#nav-profile" type="button" role="tab"
-                                        aria-controls="nav-profile" aria-selected="false">Álbums</button>
-                                    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
-                                        data-bs-target="#nav-contact" type="button" role="tab"
-                                        aria-controls="nav-contact" aria-selected="false">Merchandising</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="tab-content" id="nav-tabContent">
-                                    <!-- BANDS -->
-                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                                        aria-labelledby="nav-home-tab" tabindex="0">
-                                        <div class="btn btn-dark"><a class="text-white"
-                                                href="/products/addBand">Agregar</a></div>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped-columns">
+                                    <nav class="admin__nav">
+                                        <button type="button" class="admin__nav-link is-active" data-panel="resumen">
+                                            <i class="fa-solid fa-gauge-high"></i>
+                                            <span>Resumen</span>
+                                        </button>
+                                        <button type="button" class="admin__nav-link" data-panel="bandas">
+                                            <i class="fa-solid fa-guitar"></i>
+                                            <span>Bandas</span>
+                                            <span class="admin__nav-count">
+                                                <%= bands.length %>
+                                            </span>
+                                        </button>
+                                        <button type="button" class="admin__nav-link" data-panel="albumes">
+                                            <i class="fa-solid fa-compact-disc"></i>
+                                            <span>Álbumes</span>
+                                            <span class="admin__nav-count">
+                                                <%= albums.length %>
+                                            </span>
+                                        </button>
+                                        <button type="button" class="admin__nav-link" data-panel="merch">
+                                            <i class="fa-solid fa-shirt"></i>
+                                            <span>Merchandising</span>
+                                            <span class="admin__nav-count">
+                                                <%= merchs.length %>
+                                            </span>
+                                        </button>
+                                    </nav>
+
+                                    <a href="/" class="admin__sidebar-back">
+                                        <i class="fa-solid fa-arrow-left"></i>
+                                        <span>Volver al sitio</span>
+                                    </a>
+                                </aside>
+
+                                <!-- ============== CONTENIDO ============== -->
+                                <main class="admin__content">
+
+                                    <!-- ========== PANEL: RESUMEN ========== -->
+                                    <section class="admin__panel is-active" id="panel-resumen">
+                                        <div class="admin__panel-header">
+                                            <div>
+                                                <h1 class="admin__title">Panel de Administración</h1>
+                                                <p class="admin__subtitle">Gestioná bandas, álbumes y merchandising de
+                                                    la tienda.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="admin__stats-grid">
+                                            <div class="admin__stat-card">
+                                                <div class="admin__stat-icon"><i class="fa-solid fa-guitar"></i></div>
+                                                <div class="admin__stat-text">
+                                                    <span class="admin__stat-value">
+                                                        <%= bands.length %>
+                                                    </span>
+                                                    <span class="admin__stat-label">Bandas</span>
+                                                </div>
+                                            </div>
+                                            <div class="admin__stat-card">
+                                                <div class="admin__stat-icon"><i class="fa-solid fa-compact-disc"></i>
+                                                </div>
+                                                <div class="admin__stat-text">
+                                                    <span class="admin__stat-value">
+                                                        <%= albums.length %>
+                                                    </span>
+                                                    <span class="admin__stat-label">Álbumes</span>
+                                                </div>
+                                            </div>
+                                            <div class="admin__stat-card">
+                                                <div class="admin__stat-icon"><i class="fa-solid fa-shirt"></i></div>
+                                                <div class="admin__stat-text">
+                                                    <span class="admin__stat-value">
+                                                        <%= merchs.length %>
+                                                    </span>
+                                                    <span class="admin__stat-label">Productos de merch</span>
+                                                </div>
+                                            </div>
+                                            <div class="admin__stat-card">
+                                                <div class="admin__stat-icon"><i class="fa-solid fa-music"></i></div>
+                                                <div class="admin__stat-text">
+                                                    <span class="admin__stat-value">
+                                                        <%= totalShows %>
+                                                    </span>
+                                                    <span class="admin__stat-label">Shows totales</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h2 class="admin__section-title">Accesos rápidos</h2>
+                                        <div class="shortcut__grid admin__shortcuts">
+                                            <a href="/products/addBand" class="shortcut__card">
+                                                <div class="shortcut__icon-wrapper"><i
+                                                        class="fa-solid fa-plus shortcut__icon-modern"></i></div>
+                                                <span class="shortcut__label">Agregar banda</span>
+                                                <p class="shortcut__desc">Sumá un nuevo artista al catálogo.</p>
+                                            </a>
+                                            <a href="/products/albumAdd" class="shortcut__card">
+                                                <div class="shortcut__icon-wrapper"><i
+                                                        class="fa-solid fa-plus shortcut__icon-modern"></i></div>
+                                                <span class="shortcut__label">Agregar álbum</span>
+                                                <p class="shortcut__desc">Cargá un nuevo lanzamiento o reedición.</p>
+                                            </a>
+                                            <a href="/products/mercheAdd" class="shortcut__card">
+                                                <div class="shortcut__icon-wrapper"><i
+                                                        class="fa-solid fa-plus shortcut__icon-modern"></i></div>
+                                                <span class="shortcut__label">Agregar merch</span>
+                                                <p class="shortcut__desc">Sumá indumentaria o accesorios nuevos.</p>
+                                            </a>
+                                        </div>
+                                    </section>
+
+                                    <!-- ========== PANEL: BANDAS ========== -->
+                                    <section class="admin__panel" id="panel-bandas">
+                                        <div class="admin__panel-header">
+                                            <div>
+                                                <h1 class="admin__title">Bandas</h1>
+                                                <p class="admin__subtitle">
+                                                    <%= bands.length %> artistas en el catálogo.
+                                                </p>
+                                            </div>
+                                            <a href="/products/addBand" class="admin__btn-add">
+                                                <i class="fa-solid fa-plus"></i> Agregar banda
+                                            </a>
+                                        </div>
+
+                                        <div class="admin__table-toolbar">
+                                            <div class="admin__search-box">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                <input type="text" class="admin__search-input" data-search-for="bandas"
+                                                    placeholder="Buscar banda...">
+                                            </div>
+                                            <span class="admin__search-count" data-search-count-for="bandas">
+                                                <%= bands.length %> resultados
+                                            </span>
+                                        </div>
+
+                                        <div class="admin__table-wrapper" data-table="bandas">
+                                            <table class="admin__table">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Nombre</th>
-                                                        <th scope="col">Categoría</th>
-                                                        <th scope="col">Cantidad de Álbums</th>
-                                                        <th scope="col">Total Shows</th>
-                                                        <th scope="col">Acciones</th>
+                                                        <th>Banda</th>
+                                                        <th>Categoría</th>
+                                                        <th>Shows</th>
+                                                        <th class="admin__col-actions">Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <% bands.forEach(({id, name, mainImage, totalShows, resume,
-                                                        categoryId},index)=> { %>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <%= index + 1 %>
-                                                            </th>
+                                                    <% bands.forEach(({ id, name, mainImage, totalShows, resume,
+                                                        categoryId })=> { %>
+                                                        <tr data-search-key="<%= name.toLowerCase() %>">
                                                             <td>
-                                                                <%= name %>
+                                                                <div class="admin__row-media">
+                                                                    <div class="admin__row-thumb"><img
+                                                                            src="/images/bands/<%= mainImage %>"
+                                                                            alt="<%= name %>"></div>
+                                                                    <span class="admin__row-name">
+                                                                        <%= name %>
+                                                                    </span>
+                                                                </div>
                                                             </td>
-                                                            <td>
-                                                                <%= categoryId===1 ? "Ícono del rock" : categoryId===2
-                                                                    ? "Orgullo nacional" : categoryId===3 ? "Indie" :
-                                                                    categoryId===4 ? "Clásico" : categoryId %>
-                                                            </td>
-                                                            <td>Cantidad albums</td>
-                                                            <td>
+                                                            <td><span class="admin__badge">
+                                                                    <%= categoryLabels[categoryId] || categoryId %>
+                                                                </span></td>
+                                                            <td class="admin__col-number">
                                                                 <%= totalShows %>
                                                             </td>
                                                             <td>
-                                                                <%- include('../partials/modalBandDetail',{ id,
-                                                                    name, resume, mainImage })%>
-                                                                <div class="containerButons">
-                                                                    <button type="button" class="butonVerProd" data-bs-toggle="modal"  data-bs-target="#modalDetail<%= id %>">
-                                                                        <i class="fas fa-eye"></i>
+                                                                <div class="admin__actions">
+                                                                    <button type="button"
+                                                                        class="admin__icon-btn admin__icon-btn--view"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#viewBand<%= id %>" title="Ver">
+                                                                        <i class="fa-solid fa-eye"></i>
                                                                     </button>
-                                                                    
-                                                                        <a href="/products/edit/band/<%= id %>" class="butonEditarProd">
-                                                                            <i class="far fa-edit"></i>
+                                                                    <button
+                                                                        class="admin__icon-btn admin__icon-btn--edit"
+                                                                        title="Editar">
+                                                                        <a href="/products/edit/band/<%= id %>"
+                                                                            class="admin__icon-btn admin__icon-btn--edit"
+                                                                            title="Editar">
+                                                                            <i class="fa-solid fa-pen"></i>
                                                                         </a>
-                                                                        <button type="button" class="butonEliminarProd eliminar-btn"  data-bs-toggle="modal" data-bs-target="#modalDelete<%=id%>">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
-                                                                        <div class="modal fade" id="modalDelete<%=id%>"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="modalDeleteLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="modalDeleteLabel">
-                                                                                            Advertencia</h5>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <p>¿Estás seguro que querés
-                                                                                            eliminar <b>
-                                                                                                <%= name %>
-                                                                                            </b>?</p>
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <div class="row">
-                                                                                            <div class="col-6">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Cancelar</button>
-                                                                                            </div>
-                                                                                            <div class="col-6">
-                                                                                                <form
-                                                                                                    action="/products/bands/remove/<%=id%>?_method=DELETE"
-                                                                                                    method="POST">
-                                                                                                    <button
-                                                                                                        type="submit"
-                                                                                                        class="btn btn-danger">Eliminalo</button>
-                                                                                                </form>
-                                                                                            </div>
-                                                                                        </div>
+                                                                    </button>
 
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                    <button type="button"
+                                                                        class="admin__icon-btn admin__icon-btn--delete"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteBand<%= id %>"
+                                                                        title="Eliminar">
+                                                                        <i class="fa-solid fa-trash"></i>
+                                                                    </button>
                                                                 </div>
                                                             </td>
                                                         </tr>
+
+                                                        <!-- Modal: ver banda -->
+                                                        <div class="modal fade admin__modal" id="viewBand<%= id %>"
+                                                            tabindex="-1" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            <%= name %>
+                                                                        </h5>
+                                                                        <button type="button"
+                                                                            class="btn-close btn-close-white"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body admin__modal-body">
+                                                                        <img src="/images/bands/<%= mainImage %>"
+                                                                            alt="<%= name %>" class="admin__modal-img">
+                                                                        <p class="admin__modal-text">
+                                                                            <%= resume %>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Modal: eliminar banda -->
+                                                        <div class="modal fade admin__modal" id="deleteBand<%= id %>"
+                                                            tabindex="-1" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Eliminar banda</h5>
+                                                                        <button type="button"
+                                                                            class="btn-close btn-close-white"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>¿Estás seguro que querés eliminar <b>
+                                                                                <%= name %>
+                                                                            </b>? Esta acción no se puede deshacer.</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="admin__btn-cancel"
+                                                                            data-bs-dismiss="modal">Cancelar</button>
+                                                                        <form
+                                                                            action="/products/bands/remove/<%= id %>?_method=DELETE"
+                                                                            method="POST">
+                                                                            <button type="submit"
+                                                                                class="admin__btn-danger">Eliminar</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <% }) %>
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                    <!-- ALBUMS -->
-                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-                                        aria-labelledby="nav-profile-tab" tabindex="0">
-                                        <div class="btn btn-dark"><a class="text-white"
-                                                href="/products/albumAdd">Agregar</a></div>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped-columns">
+
+                                        <div class="admin__pagination" data-pagination-for="bandas">
+                                            <button type="button" class="admin__page-btn" data-page-action="prev"
+                                                aria-label="Página anterior">
+                                                <i class="fa-solid fa-chevron-left"></i>
+                                            </button>
+                                            <span class="admin__page-info">Página <span data-page-current>1</span> de
+                                                <span data-page-total>1</span></span>
+                                            <button type="button" class="admin__page-btn" data-page-action="next"
+                                                aria-label="Página siguiente">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </section>
+
+                                    <!-- ========== PANEL: ÁLBUMES ========== -->
+                                    <section class="admin__panel" id="panel-albumes">
+                                        <div class="admin__panel-header">
+                                            <div>
+                                                <h1 class="admin__title">Álbumes</h1>
+                                                <p class="admin__subtitle">
+                                                    <%= albums.length %> lanzamientos en el catálogo.
+                                                </p>
+                                            </div>
+                                            <a href="/products/albumAdd" class="admin__btn-add">
+                                                <i class="fa-solid fa-plus"></i> Agregar álbum
+                                            </a>
+                                        </div>
+
+                                        <div class="admin__table-toolbar">
+                                            <div class="admin__search-box">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                <input type="text" class="admin__search-input" data-search-for="albumes"
+                                                    placeholder="Buscar álbum...">
+                                            </div>
+                                            <span class="admin__search-count" data-search-count-for="albumes">
+                                                <%= albums.length %> resultados
+                                            </span>
+                                        </div>
+
+                                        <div class="admin__table-wrapper" data-table="albumes">
+                                            <table class="admin__table">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Título</th>
-                                                        <th scope="col">Género</th>
-                                                        <th scope="col">Año</th>
-                                                        <th scope="col">Precio</th>
-                                                        <th scope="col">Descuento</th>
-                                                        <th scope="col">Exclusivo</th>
-                                                        <th scope="col">Acciones</th>
+                                                        <th>Álbum</th>
+                                                        <th>Género</th>
+                                                        <th>Año</th>
+                                                        <th>Precio</th>
+                                                        <th>Descuento</th>
+                                                        <th>Exclusivo</th>
+                                                        <th class="admin__col-actions">Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <% albums.forEach(({id, title, image, genreId, year, price,
-                                                        discount, exclusive},index)=> { %>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <%= index + 1 %>
-                                                            </th>
+                                                    <% albums.forEach(({ id, title, image, genreId, year, price,
+                                                        discount, exclusive })=> { %>
+                                                        <tr data-search-key="<%= title.toLowerCase() %>">
                                                             <td>
-                                                                <%= title %>
+                                                                <div class="admin__row-media">
+                                                                    <div class="admin__row-thumb"><img
+                                                                            src="/images/albums/<%= image %>"
+                                                                            alt="<%= title %>"></div>
+                                                                    <span class="admin__row-name">
+                                                                        <%= title %>
+                                                                    </span>
+                                                                </div>
                                                             </td>
-                                                            <td>
-                                                                <%= genreId===1 ? "Rock" : genreId===2 ? "Pop" :
-                                                                    genreId===3 ? "Indie" : genreId===4 ? "Metal" :
-                                                                    genreId %>
-                                                            </td>
-                                                            <td>
+                                                            <td><span class="admin__badge">
+                                                                    <%= genreLabels[genreId] || genreId %>
+                                                                </span></td>
+                                                            <td class="admin__col-number">
                                                                 <%= year %>
                                                             </td>
-                                                            <td>
-                                                                <%= price %>
+                                                            <td class="admin__col-number">$<%= price %>
                                                             </td>
                                                             <td>
-                                                                <%= discount ? discount : 0 %>
+                                                                <% if (discount) { %>
+                                                                    <span class="admin__badge admin__badge--discount">-
+                                                                        <%= discount %>%
+                                                                    </span>
+                                                                    <% } else { %>
+                                                                        <span class="admin__text-muted">—</span>
+                                                                        <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= exclusive===0 ? "No" : "Sí" %>
+                                                                <span
+                                                                    class="admin__pill <%= exclusive === 0 ? 'admin__pill--off' : 'admin__pill--on' %>">
+                                                                    <%= exclusive===0 ? 'No' : 'Sí' %>
+                                                                </span>
                                                             </td>
                                                             <td>
-                                                                <div class="containerButons">
+                                                                <div class="admin__actions">
                                                                     <button type="button"
-                                                                        class="butonVerProd"
+                                                                        class="admin__icon-btn admin__icon-btn--view"
                                                                         data-bs-toggle="modal"
-                                                                        data-bs-target="#modalAlbumDetail<%= id %>">
-                                                                        <i class="fas fa-eye"></i>
+                                                                        data-bs-target="#viewAlbum<%= id %>"
+                                                                        title="Ver">
+                                                                        <i class="fa-solid fa-eye"></i>
                                                                     </button>
-                                                                    <%- include('../partials/modalAlbumDetail',{ id,
-                                                                        title, price, image })%>
+                                                                    <button
+                                                                        class="admin__icon-btn admin__icon-btn--edit"
+                                                                        title="Editar">
                                                                         <a href="/products/edit/album/<%= id %>"
-                                                                            class="butonEditarProd">
-                                                                            <i class="far fa-edit"></i>
+                                                                            class="admin__icon-btn admin__icon-btn--edit"
+                                                                            title="Editar">
+                                                                            <i class="fa-solid fa-pen"></i>
                                                                         </a>
-                                                                        <button type="button"
-                                                                            class="butonEliminarProd eliminar-btn"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#modalAlbumDelete<%=id%>">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
-                                                                        <div class="modal fade"
-                                                                            id="modalAlbumDelete<%=id%>" tabindex="-1"
-                                                                            aria-labelledby="modalAlbumDeleteLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="modalAlbumDeleteLabel">
-                                                                                            Advertencia</h5>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <p>¿Estás seguro que querés
-                                                                                            eliminar <b>
-                                                                                                <%= title %>
-                                                                                            </b>?</p>
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <div class="row">
-                                                                                            <div class="col-6">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Cancelar</button>
-                                                                                            </div>
-                                                                                            <div class="col-6">
-                                                                                                <form
-                                                                                                    action="/products/albums/remove/<%=id%>?_method=DELETE"
-                                                                                                    method="POST">
-                                                                                                    <button
-                                                                                                        type="submit"
-                                                                                                        class="btn btn-danger">Eliminalo</button>
-                                                                                                </form>
-                                                                                            </div>
+                                                                    </button>
 
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                    <button type="button"
+                                                                        class="admin__icon-btn admin__icon-btn--delete"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteAlbum<%= id %>"
+                                                                        title="Eliminar">
+                                                                        <i class="fa-solid fa-trash"></i>
+                                                                    </button>
                                                                 </div>
                                                             </td>
                                                         </tr>
+
+                                                        <!-- Modal: ver álbum -->
+                                                        <div class="modal fade admin__modal" id="viewAlbum<%= id %>"
+                                                            tabindex="-1" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            <%= title %>
+                                                                        </h5>
+                                                                        <button type="button"
+                                                                            class="btn-close btn-close-white"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body admin__modal-body">
+                                                                        <img src="/images/albums/<%= image %>"
+                                                                            alt="<%= title %>" class="admin__modal-img">
+                                                                        <p class="admin__modal-text">Precio: $<%= price
+                                                                                %>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Modal: eliminar álbum -->
+                                                        <div class="modal fade admin__modal" id="deleteAlbum<%= id %>"
+                                                            tabindex="-1" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Eliminar álbum</h5>
+                                                                        <button type="button"
+                                                                            class="btn-close btn-close-white"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>¿Estás seguro que querés eliminar <b>
+                                                                                <%= title %>
+                                                                            </b>? Esta acción no se puede deshacer.</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="admin__btn-cancel"
+                                                                            data-bs-dismiss="modal">Cancelar</button>
+                                                                        <form
+                                                                            action="/products/albums/remove/<%= id %>?_method=DELETE"
+                                                                            method="POST">
+                                                                            <button type="submit"
+                                                                                class="admin__btn-danger">Eliminar</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <% }) %>
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                    <!-- MERCHS -->
-                                    <div class="tab-pane fade" id="nav-contact" role="tabpanel"
-                                        aria-labelledby="nav-contact-tab" tabindex="0">
-                                        <div class="btn btn-dark"><a class="text-white"
-                                                href="/products/mercheAdd">Agregar</a></div>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped-columns">
+
+                                        <div class="admin__pagination" data-pagination-for="albumes">
+                                            <button type="button" class="admin__page-btn" data-page-action="prev"
+                                                aria-label="Página anterior">
+                                                <i class="fa-solid fa-chevron-left"></i>
+                                            </button>
+                                            <span class="admin__page-info">Página <span data-page-current>1</span> de
+                                                <span data-page-total>1</span></span>
+                                            <button type="button" class="admin__page-btn" data-page-action="next"
+                                                aria-label="Página siguiente">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </section>
+
+                                    <!-- ========== PANEL: MERCHANDISING ========== -->
+                                    <section class="admin__panel" id="panel-merch">
+                                        <div class="admin__panel-header">
+                                            <div>
+                                                <h1 class="admin__title">Merchandising</h1>
+                                                <p class="admin__subtitle">
+                                                    <%= merchs.length %> productos en el catálogo.
+                                                </p>
+                                            </div>
+                                            <a href="/products/mercheAdd" class="admin__btn-add">
+                                                <i class="fa-solid fa-plus"></i> Agregar producto
+                                            </a>
+                                        </div>
+
+                                        <div class="admin__table-toolbar">
+                                            <div class="admin__search-box">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                <input type="text" class="admin__search-input" data-search-for="merch"
+                                                    placeholder="Buscar producto...">
+                                            </div>
+                                            <span class="admin__search-count" data-search-count-for="merch">
+                                                <%= merchs.length %> resultados
+                                            </span>
+                                        </div>
+
+                                        <div class="admin__table-wrapper" data-table="merch">
+                                            <table class="admin__table">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Producto</th>
-                                                        <th scope="col">Tipo</th>
-                                                        <th scope="col">Precio</th>
-                                                        <th scope="col">Descuento</th>
-                                                        <th scope="col">Exclusivo</th>
-                                                        <th scope="col">Acciones</th>
+                                                        <th>Producto</th>
+                                                        <th>Tipo</th>
+                                                        <th>Precio</th>
+                                                        <th>Descuento</th>
+                                                        <th>Exclusivo</th>
+                                                        <th class="admin__col-actions">Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <% merchs.forEach(({id, name, image, price, discount, exclusive,
-                                                        typeId},index)=> { %>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <%= index + 1 %>
-                                                            </th>
-                                                            <td class="col-4">
-                                                                <%= name %>
+                                                    <% merchs.forEach(({ id, name, image, price, discount, exclusive,
+                                                        typeId })=> { %>
+                                                        <tr data-search-key="<%= name.toLowerCase() %>">
+                                                            <td>
+                                                                <div class="admin__row-media admin__row-media--light">
+                                                                    <div
+                                                                        class="admin__row-thumb admin__row-thumb--light">
+                                                                        <img src="/images/merch/<%= image %>"
+                                                                            alt="<%= name %>">
+                                                                    </div>
+                                                                    <span class="admin__row-name">
+                                                                        <%= name %>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td><span class="admin__badge">
+                                                                    <%= typeLabels[typeId] || typeId %>
+                                                                </span></td>
+                                                            <td class="admin__col-number">$<%= price %>
                                                             </td>
                                                             <td>
-                                                                <%= typeId===1 ? "Remera" : typeId===2 ? "Campera" :
-                                                                    typeId===3 ? "Poster" : typeId===4 ? "Taza" :
-                                                                    typeId===5 ? "Mochila" : typeId===6 ? "Sticker" :
-                                                                    typeId===7 ? "Hoodie" : typeId===8 ? "Emblema" :
-                                                                    typeId===9 ? "Púa" : typeId===10
-                                                                    ? "Merchandising General" : typeId===11
-                                                                    ? "Indumentaria General" : typeId===12
-                                                                    ? "Capsula del tiempo" : typeId %>
+                                                                <% if (discount) { %>
+                                                                    <span class="admin__badge admin__badge--discount">-
+                                                                        <%= discount %>%
+                                                                    </span>
+                                                                    <% } else { %>
+                                                                        <span class="admin__text-muted">—</span>
+                                                                        <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= price %>
+                                                                <span
+                                                                    class="admin__pill <%= exclusive === 0 ? 'admin__pill--off' : 'admin__pill--on' %>">
+                                                                    <%= exclusive===0 ? 'No' : 'Sí' %>
+                                                                </span>
                                                             </td>
                                                             <td>
-                                                                <%= discount ? discount : 0 %>
-                                                            </td>
-                                                            <td>
-                                                                <%= exclusive===0 ? "No" : "Sí" %>
-                                                            </td>
-                                                            <td>
-                                                                <div class="containerButons">
+                                                                <div class="admin__actions">
                                                                     <button type="button"
-                                                                        class="butonVerProd"
+                                                                        class="admin__icon-btn admin__icon-btn--view"
                                                                         data-bs-toggle="modal"
-                                                                        data-bs-target="#modalMerchDetail<%= id %>">
-                                                                        <i class="fas fa-eye"></i>
+                                                                        data-bs-target="#viewMerch<%= id %>"
+                                                                        title="Ver">
+                                                                        <i class="fa-solid fa-eye"></i>
                                                                     </button>
-                                                                    <%- include('../partials/modalMerchDetail',{ id,
-                                                                        name, price, image })%>
+                                                                    <button
+                                                                        class="admin__icon-btn admin__icon-btn--edit"
+                                                                        title="Editar">
                                                                         <a href="/products/edit/merch/<%= id %>"
-                                                                            class="butonEditarProd">
-                                                                            <i class="far fa-edit"></i>
+                                                                            class="admin__icon-btn admin__icon-btn--edit"
+                                                                            title="Editar">
+                                                                            <i class="fa-solid fa-pen"></i>
                                                                         </a>
-                                                                        <button type="button"
-                                                                            class="butonEliminarProd eliminar-btn"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#modalMerchDelete<%=id%>">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
-                                                                        <div class="modal fade"
-                                                                            id="modalMerchDelete<%=id%>" tabindex="-1"
-                                                                            aria-labelledby="modalMerchDeleteLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="modalMerchDeleteLabel">
-                                                                                            Advertencia</h5>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <p>¿Estás seguro que querés
-                                                                                            eliminar <b>
-                                                                                                <%= name %>
-                                                                                            </b>?</p>
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <div class="row">
-                                                                                            <div class="col-6">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Cancelar</button>
-                                                                                            </div>
-                                                                                            <div class="col-6">
-                                                                                                <form
-                                                                                                    action="/products/merchs/remove/<%=id%>?_method=DELETE"
-                                                                                                    method="POST">
-                                                                                                    <button
-                                                                                                        type="submit"
-                                                                                                        class="btn btn-danger">Eliminalo</button>
-                                                                                                </form>
-                                                                                            </div>
-                                                                                        </div>
+                                                                    </button>
 
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                    <button type="button"
+                                                                        class="admin__icon-btn admin__icon-btn--delete"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteMerch<%= id %>"
+                                                                        title="Eliminar">
+                                                                        <i class="fa-solid fa-trash"></i>
+                                                                    </button>
                                                                 </div>
                                                             </td>
                                                         </tr>
+
+                                                        <!-- Modal: ver producto -->
+                                                        <div class="modal fade admin__modal" id="viewMerch<%= id %>"
+                                                            tabindex="-1" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            <%= name %>
+                                                                        </h5>
+                                                                        <button type="button"
+                                                                            class="btn-close btn-close-white"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body admin__modal-body">
+                                                                        <img src="/images/merch/<%= image %>"
+                                                                            alt="<%= name %>"
+                                                                            class="admin__modal-img admin__modal-img--light">
+                                                                        <p class="admin__modal-text">Precio: $<%= price
+                                                                                %>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Modal: eliminar producto -->
+                                                        <div class="modal fade admin__modal" id="deleteMerch<%= id %>"
+                                                            tabindex="-1" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Eliminar producto</h5>
+                                                                        <button type="button"
+                                                                            class="btn-close btn-close-white"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>¿Estás seguro que querés eliminar <b>
+                                                                                <%= name %>
+                                                                            </b>? Esta acción no se puede deshacer.</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="admin__btn-cancel"
+                                                                            data-bs-dismiss="modal">Cancelar</button>
+                                                                        <form
+                                                                            action="/products/merchs/remove/<%= id %>?_method=DELETE"
+                                                                            method="POST">
+                                                                            <button type="submit"
+                                                                                class="admin__btn-danger">Eliminar</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <% }) %>
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                </div>
+
+                                        <div class="admin__pagination" data-pagination-for="merch">
+                                            <button type="button" class="admin__page-btn" data-page-action="prev"
+                                                aria-label="Página anterior">
+                                                <i class="fa-solid fa-chevron-left"></i>
+                                            </button>
+                                            <span class="admin__page-info">Página <span data-page-current>1</span> de
+                                                <span data-page-total>1</span></span>
+                                            <button type="button" class="admin__page-btn" data-page-action="next"
+                                                aria-label="Página siguiente">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </section>
+
+                                </main>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </main>
 
-            <%- include('../partials/footer') %>
+                        <%- include('../partials/footer') %>
 
+                            <script>
+                                const adminNavLinks = document.querySelectorAll('.admin__nav-link');
+                                const adminPanels = document.querySelectorAll('.admin__panel');
 
-                <%- include('../partials/adminSearchScript') %>
+                                adminNavLinks.forEach(link => {
+                                    link.addEventListener('click', () => {
+                                        const target = link.dataset.panel;
 
+                                        adminNavLinks.forEach(l => l.classList.remove('is-active'));
+                                        adminPanels.forEach(p => p.classList.remove('is-active'));
 
+                                        link.classList.add('is-active');
+                                        document.getElementById('panel-' + target).classList.add('is-active');
+                                    });
+                                });
 
+                                function initAdminTable(key, pageSize) {
+                                    const wrapper = document.querySelector('[data-table="' + key + '"]');
+                                    const pagination = document.querySelector('[data-pagination-for="' + key + '"]');
+                                    const searchInput = document.querySelector('[data-search-for="' + key + '"]');
+                                    const countLabel = document.querySelector('[data-search-count-for="' + key + '"]');
 
+                                    if (!wrapper || !pagination) return;
 
+                                    const allRows = Array.from(wrapper.querySelectorAll('tbody > tr'));
+                                    const prevBtn = pagination.querySelector('[data-page-action="prev"]');
+                                    const nextBtn = pagination.querySelector('[data-page-action="next"]');
+                                    const currentLabel = pagination.querySelector('[data-page-current]');
+                                    const totalLabel = pagination.querySelector('[data-page-total]');
 
-    </body>
+                                    let filteredRows = allRows;
+                                    let currentPage = 1;
 
-</html>
+                                    function render() {
+                                        const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
+                                        if (currentPage > totalPages) currentPage = totalPages;
+
+                                        allRows.forEach(row => { row.style.display = 'none'; });
+
+                                        const start = (currentPage - 1) * pageSize;
+                                        filteredRows.slice(start, start + pageSize).forEach(row => { row.style.display = ''; });
+
+                                        currentLabel.textContent = currentPage;
+                                        totalLabel.textContent = totalPages;
+                                        prevBtn.disabled = currentPage === 1;
+                                        nextBtn.disabled = currentPage === totalPages;
+                                        pagination.style.display = totalPages <= 1 ? 'none' : 'flex';
+
+                                        if (countLabel) {
+                                            countLabel.textContent = filteredRows.length + (filteredRows.length === 1 ? ' resultado' : ' resultados');
+                                        }
+                                    }
+
+                                    function applyFilter(term) {
+                                        const normalized = term.trim().toLowerCase();
+                                        filteredRows = normalized
+                                            ? allRows.filter(row => (row.dataset.searchKey || '').includes(normalized))
+                                            : allRows;
+                                        currentPage = 1;
+                                        render();
+                                    }
+
+                                    if (searchInput) {
+                                        searchInput.addEventListener('input', (e) => applyFilter(e.target.value));
+                                    }
+
+                                    prevBtn.addEventListener('click', () => {
+                                        if (currentPage > 1) {
+                                            currentPage--;
+                                            render();
+                                        }
+                                    });
+
+                                    nextBtn.addEventListener('click', () => {
+                                        const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
+                                        if (currentPage < totalPages) {
+                                            currentPage++;
+                                            render();
+                                        }
+                                    });
+
+                                    render();
+                                }
+
+                                initAdminTable('bandas', 10);
+                                initAdminTable('albumes', 10);
+                                initAdminTable('merch', 10);
+                            </script>
+            </body>
+
+            </html>

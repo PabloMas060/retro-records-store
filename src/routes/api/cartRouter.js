@@ -1,15 +1,15 @@
 const router = require('express').Router();
 
-const { removeProduct, addProduct, moreQuantity, lessQuantity, clearCart, getOrderPending, statusOrder } = require('../../controllers/api/cartApiController');
-const { cart } = require('../../controllers/users/cart')
-router
-    .get('/', cart)
-    .get('/getOrderPending', getOrderPending)
-    .post('/addProduct', addProduct)
-    .delete('/removeProduct', removeProduct)
-    .put('/moreQuantity', moreQuantity)
-    .put('/lessQuantity', lessQuantity)
-    .delete('/clearCart', clearCart)
-    .put('/statusOrder', statusOrder)
+// 1. Importaciones
+const apiController = require('../../controllers/api/cartApiController');
+const viewController = require('../../controllers/users/cart');
 
-module.exports = router
+router
+    .get('/', viewController.cartView)
+    .get('/getOrderPending', apiController.getOrderPending)
+    .post('/addProduct', apiController.addProduct)
+    .post('/removeProduct', apiController.removeProduct) 
+    .post('/clearCart', apiController.clearCart)
+    .post('/statusOrder', apiController.statusOrder); 
+
+module.exports = router;

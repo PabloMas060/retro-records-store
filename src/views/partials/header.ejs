@@ -1,62 +1,59 @@
 <header class="site__header">
-    <div class="header__container">
-        <div class="header__logo-wrapper">
-            <a href="/">
-                <img class="header__logo-img" src="/logoCreativeSouls.png" alt="Retro Records Logo">
-            </a>
-        </div>
+    <div class="header__container-fluid">
+        <a href="/" class="header__logo-text">
+            RETRO <span class="logo__highlight">RECORDS</span> STORE
+        </a>
 
         <nav class="header__nav">
             <ul class="nav__list">
-                <li class="nav__item">
-                    <button id="toggle-bars" class="nav__btn" aria-label="Abrir Secciones">
-                        <img width="24" height="24" src="/iconos/icono-radio.svg" alt="Secciones">
+                <li>
+                    <button id="btn-menu-left" class="nav__link-btn">
+                        <i class="fa-solid fa-layer-group nav__icon-fa"></i>
                         <span class="nav__text">Secciones</span>
                     </button>
                 </li>
-
-                <li class="nav__item">
+                <li>
                     <a href="/products/artists" class="nav__link">
-                        <img width="24" height="24" src="/iconos/icono-guitarraElectrica.svg" alt="Bandas">
+                        <i class="fa-solid fa-guitar nav__icon-fa"></i>
                         <span class="nav__text">Bandas</span>
                     </a>
                 </li>
 
-                <% if (locals.userLogin) { %>
-                    <% if (locals.userLogin.rolId === 1) { %>
-                        <li class="nav__item nav__item--admin">
-                            <a href="/users/admin" class="nav__link">
-                                <img width="24" height="24" src="/iconos/icono-diamante.svg" alt="Admin">
-                                <span class="nav__text text--gradient">Admin</span>
+                <% if (locals.user) { %>
+                    <li>
+                        <a href="/api/cart" class="nav__link nav__cart-link">
+                            <i class="fa-solid fa-bag-shopping nav__icon-fa"></i>
+                            <span class="nav__text">Carrito</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/users/profile" class="nav__link profile-highlight">
+                            <i class="fa-solid fa-circle-user nav__icon-fa" style="color: #c5a059;"></i>
+                            <span class="nav__text">Hola, <%= user.name || user.first_name || 'Perfil' %></span>
+                        </a>
+                    </li>
+
+                    <% if (user.rolId === 1) { %>
+                        <li>
+                            <a href="/users/admin" class="nav__link" style="color: #c5a059;">
+                                <i class="fa-solid fa-screwdriver-wrench nav__icon-fa"></i>
+                                <span class="nav__text">Admin</span>
                             </a>
                         </li>
                     <% } %>
 
-                    <li class="nav__item">
-                        <a href="/api/cart" class="nav__link">
-                            <img width="24" height="24" src="/iconos/icono-carrito.svg" alt="Carrito">
-                            <span class="nav__text">Carrito</span>
-                        </a>
-                    </li>
-
-                    <li class="nav__item nav__item--profile">
-                        <a href="/users/profile" class="nav__profile-link">
-                            <img class="nav__avatar" src="<%= /http/.test(user.avatar) ? user.avatar?.toString().trim() : `/avatar/${user.avatar || 'default-avatar.jpg'}` %>" alt="Mi Perfil">
-                            <span class="nav__text"><%= locals.userLogin.name || 'Perfil' %></span>
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="/users/logout" class="nav__link nav__link--logout">
-                            <img width="24" height="24" src="/iconos/icono-cerrar.svg" alt="Salir">
+                    <li>
+                        <a href="/users/logout" class="nav__link">
+                            <i class="fa-solid fa-right-from-bracket nav__icon-fa"></i>
                             <span class="nav__text">Salir</span>
                         </a>
                     </li>
 
                 <% } else { %>
-                    <li class="nav__item">
-                        <a href="#" id="open-login-modal-link" class="nav__link nav__link--login">
-                            <img width="24" height="24" src="/iconos/icono-avatarTemporal.svg" alt="Ingresar">
+                    <li>
+                        <a href="/users/login" class="nav__link">
+                            <i class="fa-solid fa-user nav__icon-fa"></i>
                             <span class="nav__text">Ingresar</span>
                         </a>
                     </li>
@@ -66,81 +63,36 @@
     </div>
 </header>
 
-<div class="menu-left">
-    <section class="menu-left__content">
-        <div class="menu-left__header">
-            <h3>Secciones</h3> 
-            <a id="toggle-button-close2" href="#" class="menu__close-btn" aria-label="Cerrar">
-                <i class="fa-regular fa-circle-xmark"></i>
-            </a>
+<div class="container mt-3">
+    <% if (locals.successMessage && successMessage.length > 0) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= successMessage %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div class="menu-left__grid">
-            <a href="/fans" class="menu-left__item">
-                <img width="40" height="40" src="/iconos/icono-guitarraElectrica.svg" alt="Fans">
-                <p>Para los fans</p>
-            </a>
-            <a href="/products/artists" class="menu-left__item">
-                <img width="40" height="40" src="/iconos/icono-mensaje.svg" alt="Artistas">
-                <p>Artistas</p>
-            </a>
-            <a href="/capsule" class="menu-left__item">
-                <img width="40" height="40" src="/iconos/icono-relojArena.svg" alt="Cápsula">
-                <p>Cápsula del tiempo</p>
-            </a>
+    <% } %>
+
+    <% if (locals.errorMessage && errorMessage.length > 0) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= errorMessage %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    </section>
-    <section class="menu-left__news">
-        <h3>Noticias</h3>
-        </section>
+    <% } %>
 </div>
 
-<%- include('modalLogin') %>
-
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const menuLeft = document.querySelector(".menu-left");
-        const toggleBars = document.getElementById("toggle-bars");
-        const toggleClose2 = document.getElementById("toggle-button-close2");
+    const btnMenuLeft = document.getElementById('btn-menu-left');
+    const menuLeft = document.getElementById('menu-left');
+    const btnCloseMenuLeft = document.getElementById('close-menu-left');
 
-        // Abrir menú lateral izquierdo
-        if(toggleBars) {
-            toggleBars.addEventListener("click", function (e) {
-                e.preventDefault();
-                menuLeft.classList.toggle("menu-left-visible");
-            });
-        }
+    if (btnMenuLeft && menuLeft) {
+        btnMenuLeft.addEventListener('click', () => {
+            menuLeft.classList.toggle('menu-left-visible');
+        });
+    }
 
-        // Cerrar menú lateral izquierdo
-        if(toggleClose2) {
-            toggleClose2.addEventListener("click", function (e) {
-                e.preventDefault();
-                menuLeft.classList.remove("menu-left-visible");
-            });
-        }
-
-        // Lógica Modal Login
-        const openLoginLink = document.getElementById('open-login-modal-link');
-        const loginModal = document.getElementById('login-modal');
-
-        if (loginModal) {
-            loginModal.style.display = 'none';
-
-            if (openLoginLink) {
-                openLoginLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    loginModal.style.display = 'flex';
-                });
-            }
-
-            const closeLoginModal = () => { loginModal.style.display = 'none'; };
-
-            window.addEventListener('click', (e) => {
-                if (e.target === loginModal) closeLoginModal();
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeLoginModal();
-            });
-        }
-    });
+    if (btnCloseMenuLeft && menuLeft) {
+        btnCloseMenuLeft.addEventListener('click', () => {
+            menuLeft.classList.remove('menu-left-visible');
+        });
+    }
 </script>
